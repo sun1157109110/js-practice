@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const myInstanceof = (left, right) => {
+          //如果是基本数据类型或者为null直接返回false
+        if (typeof left !== ("object" && "function") || left === null)
+          return false;
+        let proto = Object.getPrototypeOf(left);
+        while (true) {
+          if (!proto) return false;
+          if (proto === right.prototype) return true;
+          proto = Object.getPrototypeOf(proto);
+        }
+      };
+      console.log(myInstanceof(myInstanceof, Object));
+      console.log(myInstanceof instanceof Object);
+    </script>
+  </body>
+</html>

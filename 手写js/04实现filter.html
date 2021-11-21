@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>实现filter</title>
+  </head>
+  <body>
+    <script>
+      Array.prototype.myFilter = function(callback,thisArg){
+        if (this == undefined) throw new Error("this is null or undefined");
+        if (typeof callback !== "function")throw new TypeError("this is not function");
+        const res = []
+        const arr = this;
+        for (let i in arr){
+            if(Object.prototype.hasOwnProperty.call(this,i)){
+                if(callback.call(thisArg,arr[i],i,arr)){
+                    res.push(arr[i])
+                }
+            }
+        }
+        return res
+      };
+      const list = [1,2,7,3,5]
+      console.log(list.myFilter((item)=>item>5));
+    </script>
+  </body>
+</html>

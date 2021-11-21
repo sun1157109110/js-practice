@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>冒泡排序</title>
+  </head>
+  <body>
+    <script>
+      function bubbleSort(array) {
+        let length = array.length;
+        //每一项都要经过一轮排序 将最大的放在最后
+        for (let i = 0; i < length; i++) {
+            //从头到后依次比较
+          for (let j = 0; j < length - 1 - i; j++) {
+            if (array[j] > array[j + 1]) {
+              [array[j], array[j + 1]] = [array[j + 1], array[j]];
+            }
+          }
+        }
+        return array;
+      }
+      const arr = [6, 3, 1, 7, 9, 5, 0, 100, 98];
+      console.log(bubbleSort(arr));
+    </script>
+  </body>
+</html>

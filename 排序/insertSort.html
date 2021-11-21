@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>插入排序</title>
+  </head>
+  <body>
+    <script>
+      const insertSort = (array) => {
+        for (let i = 1; i < array.length; i++) {
+          for (let j = i; j > 0; j--) {
+            if (array[j] < array[j - 1]) {
+              [array[j], array[j - 1]] = [array[j - 1], array[j]];
+            }
+          }
+        }
+        return array;
+      };
+      console.log(insertSort([8, 5, 3, 7, 2, 10]));
+      console.log('-----------------------');
+      const nums = [3,500,87]
+      const newArray = nums.map((item)=> [...String(item)])
+      console.log(newArray);
+    </script>
+  </body>
+</html>

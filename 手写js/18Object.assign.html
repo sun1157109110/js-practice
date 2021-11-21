@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>object.assign</title>
+  </head>
+  <body>
+    <script>
+      Object.defineProperty(Object, "assign", {
+        value: function (target, ...args) {
+          if (!target)
+            throw new TypeError("Cannot convert undefined or null to object");
+          // 目标对象需要统一是引用数据类型，若不是会自动转换
+          let o = Object(target);
+          for (let i = 0; i < args.length; i++) {
+            if (args[i]) {
+              for (const j in args[i]) {
+                if (Object.prototype.hasOwnProperty.call(args[i], j)) {
+                  o[j] = args[i][j];
+                }
+              }
+            }
+          }
+          return o
+        },
+        enumerable:false,
+        Writable:true,
+        configurable:true
+      });
+    </script>
+  </body>
+</html>

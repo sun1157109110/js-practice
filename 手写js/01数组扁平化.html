@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>数组扁平化</title>
+  </head>
+  <body>
+    <script>
+      // //使用Array.prototype.flat方法
+      // const arr = [
+      //   [[1, 2], 3],
+      //   4,
+      //   [
+      //     [4, 8],
+      //     [9, 77],
+      //   ],
+      // ];
+      // const newArr = arr.flat(Infinity);
+      // console.log(newArr); //[1, 2, 3, 4, 4, 8, 9, 77]
+      // //使用reduce
+      // const arrFlat = (array) => {
+      //   return array.reduce((pre, cur) => {
+      //     return pre.concat(Array.isArray(cur) ? arrFlat(cur) : cur);
+      //   }, []);
+      // };
+      // console.log(arrFlat(arr));
+      // //递归
+      // const res = [];
+      // const flatWay = (array) => {
+      //   for (let i = 0; i < array.length; i++) {
+      //     if (Array.isArray(array[i])) {
+      //       flatWay(array[i]);
+      //     } else {
+      //       res.push(array[i]);
+      //     }
+      //   }
+      // };
+      // flatWay(arr);
+      // console.log(res);
+      //计算数组最大深度
+      // let max = 1;
+      // function getArrayMaxDepth(nums, depth) {
+      //   for (let i = 0; i < nums.length; i++) {
+      //     if (nums[i].constructor === Array) {
+      //       getArrayMaxDepth(nums[i], depth + 1);
+      //       max = Math.max(depth +1 , max);
+      //     }
+          
+      //   }
+      //   return max;
+      // }
+      function getListDepth(nums){
+
+      }
+      let arr1 = [1]
+      let arr = [1, [2, 3], [4, [5, [6, 7]]], [8]];
+      // var r = getArrayMaxDepth(arr, 1);
+      // console.log(r);
+      console.log(arr.join(''));
+      
+    </script>
+  </body>
+</html>

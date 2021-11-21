@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>bind</title>
+  </head>
+  <body>
+    <script>
+      //如果传入thisArg为null或者undefined,则默认为window
+      Function.prototype.bind1 = function (context, ...args) {
+        //先对this类型作出判断
+        if (typeof this !== "function")
+          throw new TypeError("this is not function");
+        const self = this;
+        return function F(){
+            //判断是否是构造函数调用,返回的函数为构造函数
+            if(this instanceof F){
+                return new self(...args,...arguments)
+            }
+            //返回一个函数 函数柯里化
+            self.apply(context,[...args,...arguments])
+        }
+      };
+      
+    </script>
+  </body>
+</html>

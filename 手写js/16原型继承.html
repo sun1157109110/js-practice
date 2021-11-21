@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>寄生组合继承</title>
+</head>
+<body>
+    <script>
+        function Father(){
+            this.a = 'sss'
+        };
+        function Child(){
+            Father.call(this)
+            this.name = 'child'
+        };
+        //寄生
+        Child.prototype =Object.create(Father.prototype);
+        Child.prototype.constructor = Child;
+        const kid = new Child();
+        console.log(kid.__proto__.__proto__===Father.prototype);
+    </script>
+</body>
+</html>

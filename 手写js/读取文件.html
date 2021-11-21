@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      body {
+        width: 100%;
+        height: 100%;
+      }
+      .container {
+        height: 100px;
+        text-align: center;
+        margin-top: 100px;
+      }
+      .readFile {
+        width: 200px;
+        height: 30px;
+        line-height: 30px;
+        border: 1px solid #eded;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <input class="readFile" id="fileInput" type="file" multiple/>
+    </div>
+    <script>
+      let fileEle = document.getElementById("fileInput");
+      let reader = new FileReader();
+      fileEle.onchange = function () {
+          if(this.files.length===0){
+              console.log('请选择文件');
+              return
+          }
+        console.log(this.files);
+        reader.onload = () => {
+          console.log(reader.result);
+        };
+        reader.readAsText(this.files[0]);
+      };
+      console.log(-3.5|0);
+      console.log(Math.floor(-3.5));
+    </script>
+  </body>
+</html>

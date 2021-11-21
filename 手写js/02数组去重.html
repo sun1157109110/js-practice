@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>数组去重</title>
+  </head>
+  <body>
+    <script>
+      const arr = [1.2, 4, 2, 4, 1, 6, 9, 6];
+      //使用set
+      const newArr = new Set(arr);
+      //使用splice删除
+      const way1 = (array) => {
+        for (let i = 0; i < array.length; i++) {
+          for (let j = i + 1; j < array.length; j++) {
+            if (array[i] === array[j]) {
+              array.splice(j, 1);
+              j--;
+              array.length--;
+            }
+          }
+        }
+        return array;
+      };
+      //indexOf
+      const way2 = (array) => {
+        const res = [];
+        for (let i = 0; i < array.length; i++) {
+          if (res.indexOf(array[i]) === -1) {
+            res.push(array[i]);
+          }
+        }
+        return res;
+      };
+      let a = "+";
+      console.log(Math.floor(-1.2));
+      var longestCommonSubsequence = function (text1, text2) {
+        const dp = Array(text1.length )
+          .fill(0)
+          .map(() => Array(text2.length ).fill(0));
+        for (let o = 0; o < text2.length; o++) {
+          if (text2.slice(0,o+1).indexOf(text1[0])!==-1) {
+            dp[0][o] = 1;
+          }
+        }
+        for (let p = 0; p < text1.length; p++) {
+          if (text1.slice(0,p+1).indexOf(text2[0])!==-1) {
+            dp[p][0] = 1;
+          }
+        }
+        for (let i = 1; i < text1.length; i++) {
+          for (let j = 1; j < text2.length; j++) {
+            if (text1[i] === text2[j]) {
+              dp[i][j] = dp[i - 1][j - 1] + 1;
+            } else {
+              dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+            }
+          }
+        }
+        console.log(dp);
+        return dp[text1.length-1][text2.length-1]
+      };
+      console.log(longestCommonSubsequence("abcde", "ace"));
+    </script>
+  </body>
+</html>

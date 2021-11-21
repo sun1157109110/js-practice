@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>深拷贝</title>
+  </head>
+  <body>
+    <script>
+      //考虑symbol属性版本
+      const deepClone1 = (target, hash = new WeakMap()) => {
+        //对于传入参数的处理
+        if (!target || typeof target !== "object") return target;
+        //查找hash表
+        if (hash.has(target)) return hash.get(target);
+        //对object类型判断
+        let cloneTarget = Array.isArray(target) ? [] : {};
+        hash.set(target, cloneTarget);
+        //考虑symbol
+        let symbols = Object.getOwnPropertySymbols(target);
+        symbols.forEach((symbolKey) => {
+          if (typeof symbolKey === "object" && symbolKey !== null) {
+            cloneTarget[symbolKey] = deepClone(symbolKey);
+          } else {
+            cloneTarget[symbolKey] = target[symbolKey];
+          }
+        });
+        for (const i in target) {
+          //for in 对象原型上的方法和属性也会被遍历
+          if (Object.prototype.hasOwnProperty.call(target, i)) {
+            cloneTarget[i] =
+              typeof target[i] === "object" && target[i] !== null
+                ? deepClone1(target[i], hash)
+                : target[i];
+          }
+        }
+        return cloneTarget;
+      };
+
+      //不考虑symbol
+      const deepClone2 = (target)=>{
+        //对于传入参数的处理
+        if (!target || typeof target !== "object") return target;
+        //对object类型判断
+        let cloneTarget = Array.isArray(target) ? [] : {};
+        for (const i in target) {
+          //for in 对象原型上的方法和属性也会被遍历,所以要做个判断
+          if (target.hasOwnProperty(i)) {
+            cloneTarget[i] =
+              typeof target[i] === "object" && target[i] !== null
+                ? deepClone1(target[i])
+                : target[i];
+          }
+        }
+        return cloneTarget;
+      }
+
+
+
+      let obj1 = { a: { b: [1, 2] } };
+      let obj2 = deepClone2(obj1);
+      obj1.a = 0
+      console.log(obj1,obj2);
+    </script>
+  </body>
+</html>

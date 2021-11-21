@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>二叉树</title>
+  </head>
+  <body>
+    <script>
+      class Stack {
+        constructor() {
+          this.list = [];
+        }
+        pushStack(value) {
+          this.list.push(value);
+        }
+        popStack() {
+          return this.list.pop();
+        }
+        isEmpty() {
+          return this.length === 0;
+        }
+      }
+
+      class Node {
+        constructor(key) {
+          this.key = key;
+          this.left = left;
+          this.right = right;
+        }
+      }
+      class BinarySearchTree {
+        constructor() {
+          this.root = null;
+        }
+        //根结点和新插入的键值
+        insertNode(node, key) {
+          const newNode = new Node(key);
+          if (key < node.key) {
+            if (!node.left) {
+              node.left = newNode;
+            } else {
+              insertNode(node.left, key);
+            }
+          } else {
+            if (!node.right) {
+              node.right = newNode;
+            } else {
+              insertNode(node.right, key);
+            }
+          }
+        }
+
+        insert() {
+          const node = new Node(key);
+          if (this.root === null) {
+            this.root = node;
+          } else {
+            this.insertNode(this.root, key);
+          }
+        }
+        //递归中序遍历
+        inOrderTraverse(root) {
+          if (!root) return;
+          inOrderTraverse(root.left);
+          console.log(root.key);
+          inOrderTraverse(root.right);
+        }
+        //递归先序遍历
+        preOrderTraverse(root) {
+          if (!root) return;
+          console.log(root.key);
+          inOrderTraverse(root.left);
+          inOrderTraverse(root.right);
+        }
+        //递归后序遍历
+        postOrderTraverse(root) {
+          if (!root) return;
+          inOrderTraverse(root.left);
+          inOrderTraverse(root.right);
+          console.log(root.key);
+        }
+
+        //非递归中序遍历
+        inOrder(root) {
+          //创建指针
+          let p = root;
+          let s = new Stack();
+          if (!root) {
+            return;
+          }
+          //当栈中还有元素或者p存在的时候进入循环,也就是说栈为空且p指针为null时遍历结束
+          while (!s.isEmpty() || p) {
+            while (p) {
+              s.pushStack(p);
+              p = p.left;
+            }
+            p = p.popStack();
+            console.log(p.key);
+            p = p.right;
+          }
+        }
+        //非递后先序遍历
+        inOrder(root) {
+          let res = [];
+          //创建指针
+          let p = root;
+          let s = new Stack();
+          if (!root) {
+            return;
+          }
+          //当栈中还有元素或者p存在的时候进入循环,也就是说栈为空且p指针为null时遍历结束
+          while (!s.isEmpty() || p) {
+            while (p) {
+              s.pushStack(p);
+              res.unshift(p.val)
+              p = p.right;
+            }
+            p = p.popStack();
+            p = p.left;
+          }
+        }
+
+        //返回最小的键
+        min(root) {
+          return minNode(root).key;
+        }
+        //返回最小的节点
+        minNode(root) {
+          let current = root;
+          if (!root) return;
+          while (current.left) {
+            current = current.left;
+          }
+          return current;
+        }
+        //返回最大的键
+        max(root) {
+          let current = root;
+          if (!root) return;
+          while (current.right) {
+            current = current.right;
+          }
+          return current.key;
+        }
+        //查找
+        searchNode(root, node) {
+          if (!root) return false;
+          if (root.key === node.key) {
+            return true;
+          } else if (node.key < root.key) {
+            searchNode(root.left, node);
+          } else {
+            searchNode(root.right, node);
+          }
+        }
+        remove(root, key) {
+          if (!root) return null;
+          if (key < root.key) {
+            remove(root.left, key);
+            return root;
+          } else if (key > root.key) {
+            remove(root.right, key);
+            return root;
+          } else {
+            //第一种情况 移出的节点没有孩子
+            if (!root.left && !root.right) {
+              root.key = null;
+              return root;
+              //第二种情况 只有一个左孩子或者右孩子
+            } else if (!root.left) {
+              //移出key节点 将孩子放到移出的位置
+              root = root.right;
+              return root;
+            } else if (!root.right) {
+              root = root.left;
+              return root;
+              //第三种情况 左右孩子都存在 找右子树最小的节点放在被删除的节点
+            } else {
+              node = this.minNode(root.right);
+              this.remove(root.right, node.key);
+              node.right = root.right;
+              root = node;
+              return root;
+            }
+          }
+        }
+      }
+    </script>
+  </body>
+</html>

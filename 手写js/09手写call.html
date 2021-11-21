@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>call</title>
+  </head>
+  <body>
+    <script>
+      //如果传入thisArg为null或者undefined,则默认为window
+      function call(context = window,...args) {
+        //先对this类型作出判断
+          if(typeof this !== 'function')throw new TypeError("this is not function");
+          //创建符号
+          const fn = Symbol('fn');
+          context[fn] = this;
+          const res = context[fn](...args)
+          //删除符号 防止重复调用属性越来越多
+          delete context[fn]
+          return res
+      }
+    </script>
+  </body>
+</html>

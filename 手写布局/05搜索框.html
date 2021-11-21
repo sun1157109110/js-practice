@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>搜索框</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: #494A5F;
+            font-weight: 500;
+            font-family: "Microsoft YaHei","宋体","Segoe UI", "Lucida Grande", Helvetica, Arial,sans-serif, FreeSans, Arimo;
+        }
+        input, button {
+            border: none;
+            outline: none;
+            padding: 0px;
+        }
+        .search{
+            width: 400px;
+            height: 32px;
+            margin: 100px auto;
+           
+        }
+        .searchInput{
+            float: left;
+            padding: 6px;
+            width: 300px;
+            height: 32px;
+            border: 1px solid black;
+            text-indent: 4px;
+        }
+        .searchSubmit{
+            float: left;
+             /*去掉蓝色高亮框*/
+            outline: hidden;
+            background-color: green;
+            width:80px;
+            height: 32px;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <form name="searchBar" class="search">
+        <input type="text" name="searchContent" class="searchInput" placeholder="请输入搜索内容">
+        <button type="submit" class="searchSubmit" onclick="getSearch()">搜索</button>
+    </form>
+    <script type="text/javascript">
+        const getSearch = ()=>{
+            let form = document.getElementsByClassName('search')
+            console.log(window.event);
+            window.event.returnValue=false
+            console.log(form);
+            console.log(1);
+            
+        }
+    </script>
+</body>
+</html>

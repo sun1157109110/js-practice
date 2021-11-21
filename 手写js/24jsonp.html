@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>jsonp</title>
+  </head>
+  <body>
+    <script>
+      // //解构赋值参数
+      // const jSONP = ({ url, params, callbackName }) => {
+      //   const generateUrl = () => {
+      //     let dataSrc = "";
+      //     for (const key in params) {
+      //       //因为javascript没有将hasOwnProperty作为一个敏感词，所以我们很有可能将对象的一个属性命名为hasOwnProperty，这样一来就无法再使用对象原型的 hasOwnProperty 方法来判断属性是否是来自原型链。
+      //       if (Object.hasOwnProperty.call(params, key)) {
+      //         dataSrc += `${key}=${params[key]}&`;
+      //       }
+      //     }
+      //     //传入回调函数名称
+      //     dataSrc += `callback=${callbackName}`;
+      //     return `${url}?${dataSrc}`;
+      //   };
+      //   //使用promise包装
+      //   return new Promise((resolve, reject) => {
+      //     const scriptEle = document.createElement("script");
+      //     scriptEle.setAttribute('src',generateUrl());
+      //     document.body.appendChild(scriptEle);
+      //     //全局绑定回调函数
+      //     window[callbackName] = (data)=>{
+      //       resolve(data);
+      //       document.removeChild(scriptEle)
+      //     }
+      //   });
+      // };
+
+      const JsonP = ({ url, params, callback }) => {
+        const generateUrl = () => {
+          let dataSrc = "";
+          for (const key in params) {
+            if (Object.prototype.hasOwnProperty.call(params, key)) {
+              dataSrc += `${key}=${params[key]}&`;
+            }
+          }
+          dataSrc = url + "?" + dataSrc + `callback=${callback}`;
+          return dataSrc;
+        };
+        return new Promise((resolve,reject)=>{
+          let newEle = document.createElement('script');
+          newEle.src = generateUrl();
+          document.body.appendChild(newEle);
+          window[callback] = (data)=>{
+            resolve(data);
+            document.removeChild(newEle)
+          }
+        })
+      };
+    </script>
+  </body>
+</html>

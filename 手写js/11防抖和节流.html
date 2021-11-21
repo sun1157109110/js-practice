@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>防抖和节流</title>
+  </head>
+  <body>
+    <input type="text" />
+    <input type="button" id="1" value="防抖提交" />
+    <input type="text" />
+    <input type="button" id="2" value="节流提交" />
+    <script>
+      //防抖函数
+      btn1 = document.getElementById("1");
+      btn1.addEventListener("click", debounce(submit, 2000));
+
+      function submit(e) {
+        console.log(1);
+      }
+      function debounce(fn, time) {
+        let timer = null;
+        return function () {
+          if(timer)clearTimeout(timer);
+          timer = setTimeout(() => {
+            fn.apply(this, arguments);
+          }, time);
+        };
+      }
+      //节流函数
+      btn2 = document.getElementById("2");
+      btn2.addEventListener("click", throttle(submit, 2000));
+      //   function throttle(fn, time) {
+      //     let begin = 0;
+
+      //     return function () {
+      //       let cur = Date.now();
+      //       if (cur - begin > time) {
+      //         fn.apply(this, arguments);
+      //         begin = cur;
+      //       }
+      //     };
+      //   }
+      function throttle(fn, time) {
+          //先把阀门开启
+        let flag = true;
+        return function () {
+          if (!flag) return;
+          //阀门关闭等定时器时间到了再开启
+          flag = false;
+          setTimeout(() => {
+            fn.apply(this, arguments);
+            flag = true;
+          }, time);
+        };
+      }
+      let arr = [1,33,2,9,4,5];
+      console.log(arr);
+      console.log([3,2,3,1,2,4,5,5,6,7,7,8,2,3,1,1,1,10,11,5,6,2,4,7,8,5,6].sort());
+      console.log(arr.sort((a,b)=>a-b));
+    </script>
+  </body>
+</html>

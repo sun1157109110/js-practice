@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function newOperator(cFuc,...args){
+            if(typeof cFuc !=='function')throw new TypeError('Type Error!');
+            //创建一个新对象 将新对象的__proto__指向参数
+            let obj = Object.create(cFuc.prototype);
+            //将this指向obj
+            res = cFuc.apply(obj,args);
+            //如果构造函数返回值是引用类型 则返回res,否则返回obj
+            return  res instanceof Object?res:obj
+
+        }
+        class A{
+            constructor(){
+                this.a = null
+            }
+        };
+        const obj ={}
+        const a =(b)=>{
+            console.log(this);
+            console.log(b);
+        };
+        function Aa(){
+            this.name = name
+        }
+        
+        console.log(parseInt(5.5));
+        console.log(Math.floor(11/2));
+    </script>
+</body>
+</html>

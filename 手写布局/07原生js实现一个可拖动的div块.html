@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>原生js实现一个可拖动的div块</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      body {
+        position: relative;
+      }
+      .move {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 300px;
+        height: 300px;
+        background-color: deepskyblue;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="move"></div>
+    <script>
+      let div = document.getElementsByClassName("move")[0];
+      console.log(div);
+      let preMoveX, preMoveY, MoveX, MoveY;
+      let isMove = false;
+      div.onmousedown = function (e) {
+        isMove = true;
+        preMoveX = e.pageX;
+        preMoveY = e.pageY;
+        // console.log(preMoveX, preMoveY);
+        console.log(window.innerWidth);
+      };
+      div.onmousemove = function (e) {
+        if (isMove) {
+        //   console.log(preMoveX, preMoveY);
+          moveX = e.pageX - preMoveX;
+          moveY = e.pageY - preMoveY;
+          div.style.left = moveX + "px";
+          div.style.top = moveY + "px";
+            console.log(moveX, moveY);
+        }
+      };
+      div.onmouseup = function (e) {
+        div.style.left = "0px";
+        div.style.top = "0px";
+        isMove = false;
+      };
+    </script>
+  </body>
+</html>

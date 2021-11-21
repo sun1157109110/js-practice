@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      class Node {
+        constructor(element) {
+          this.element = element;
+          this.next = null;
+        }
+      }
+      class SingleLinkList {
+        constructor() {
+          this.length = 0;
+          this.head = null;
+        }
+        push(element) {
+          const newNode = new Node(element);
+          if (this.length === 0) {
+            this.head = newNode;
+          } else {
+            let current = this.head;
+            while (current.next) {
+              current = current.next;
+            }
+            current.next = newNode;
+          }
+          this.length++;
+        }
+
+        removeAt(index) {
+          //检查越界
+          if (index >= 0 && index < this.length) {
+            let current = this.head;
+            let pre;
+            if (index === 0) {
+              this.head = current.next;
+            } else {
+              let count = 0;
+              while (count !== index) {
+                count++;
+                pre = current;
+                current = current.next;
+              }
+              pre.next = current.next;
+            }
+            this.length--;
+            return current.element;
+          } else {
+            return null;
+          }
+        }
+
+        insert(element, index) {
+          const node = new Node(element);
+          if (index >= 0 && index < this.length) {
+            let current = this.head;
+            let pre;
+            if (index === 0) {
+              this.head = node;
+              node.next = current.next;
+            } else {
+              let count = 0;
+              while (count !== index) {
+                count++;
+                pre = current;
+                current = current.next;
+              }
+              pre.next = node;
+              node.next = current;
+            }
+            this.length++;
+            return true;
+          }
+          return false;
+        }
+
+        indexOf(element) {
+          let current = this.head;
+          let count = 0;
+          while (current) {
+            if (current.element === element) {
+              return count;
+            }
+            current = current.next;
+            count++;
+          }
+          if (current === null) {
+            return -1;
+          }
+        }
+
+        remove(element) {
+          return this.removeAt(this.indexOf(element));
+        }
+
+        isEmpty() {
+          return this.length === 0;
+        }
+
+        size() {
+          return this.length;
+        }
+
+        goHead() {
+          return this.head;
+        }
+
+        toString() {
+          let current = this.head;
+          let resultString = "";
+          while (current) {
+            resultString += current.element + "";
+            current = current.next;
+          }
+          return resultString;
+        }
+      }
+
+      let list = new SingleLinkList();
+      list.push(1);
+      list.push(2);
+      list.push(3);
+      list.push(4);
+      list.push("hahaha");
+      list.removeAt(0);
+      console.log(list.size());
+      console.log(list.isEmpty());
+      console.log(list.indexOf(999999));
+      console.log(list.toString());
+      console.log("------------------------");
+
+      var uniquePaths = function (m, n) {
+        let dp = new Array(m).fill().map(()=>Array(n));
+        for (let i = 0; i < m; i++) {
+          for (let j = 0; j < n; j++) {
+            if (i === 0 || j === 0) {
+              dp[i][j] = 1;
+            } else {
+              dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
+            }
+          }
+        }
+        console.log(dp);
+        return dp[m - 1][n - 1];
+      };
+      console.log(uniquePaths(3,7));
+      console.log("-------------------");
+    </script>
+  </body>
+</html>

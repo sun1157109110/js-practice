@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>quickSort</title>
+  </head>
+  <body>
+    <script>
+      // function choosePivot(array,left,right){
+      //     let mid = Math.floor((right+left)/2);
+      //     let maxIndex = left;
+      //     if(array[left]>array[mid]){
+      //         [array[mid],array[left]] = [array[left],array[mid]];
+      //     };
+      //     if(array[mid]>array[right]){
+      //         [array[mid],array[right]] = [array[right],array[mid]];
+      //     };
+      //     if(array[left]>array[mid]){
+      //         [array[mid],array[left]] = [array[left],array[mid]];
+      //     };
+      //     //将中间的元素与倒数第二个交换
+      //     [array[mid],array[right-1]] = [array[right-1],array[mid]]
+      //     return array[right-1]
+      // };
+      // function quickSort(array){
+      //     return quick(array,0,array.length-1)
+      // };
+      // function quick(array,left,right){
+      //     if(left>=right)return;
+      //     let l = left+1;
+      //     let r = right-2;
+      //     let pivot = choosePivot(array,left,right)
+      //     while (l<r){
+      //         while(array[l]<pivot){l++};
+      //         while(array[r]>pivot){r--};
+      //         if(l<r){
+      //             [array[l],array[r]] = [array[r],array[l]]
+      //         }
+      //     }
+      //     [array[l],array[right-1]] = [array[right-1],array[l]]
+      //     quick(array,left,l-1);
+      //     quick(array,l+1,right)
+      //     return array
+
+      // };
+      function quickSort(array, left, right) {
+        if (left >= right) return;
+        let pivot = array[left];
+        let l = left;
+        let r = right;
+        while (l < r) {
+          while (l < r && array[r] >= pivot) {
+            r--;
+          }
+          if (l < r) {
+            // 从后往前找比基准小的数
+            [array[l], array[r]] = [array[r], array[l]];
+            l++;
+          }
+          while (l < r && array[l] <= pivot) {
+            l++;
+          }
+          if (l < r) {
+            [array[r], array[l]] = [array[l], array[r]];
+            r--;
+          }
+        }
+        quickSort(array, left, l - 1);
+        quickSort(array, l + 1, right);
+        return array;
+      }
+      console.log(quickSort([5, 2, 8, 44, 2, 10, 75], 0, 6));
+     
+      var canPartition = function (nums) {
+        let sum = nums.reduce((pre, cur) => pre + cur);
+        if (sum % 2 === 1) return false;
+        let target = sum / 2;
+        const dp = Array(target + 1).fill(0);
+        for (let i = 0; i < nums.length; i++) {
+          for (let j = target; target >= nums[i]; j--) {
+            dp[j] = Math.max(dp[j], dp[j - nums[i]] + nums[i]);
+          }
+        }
+        return dp[target] === target;
+      };
+      let ar = [1,5,11,5]
+      console.log(canPartition(ar));
+    </script>
+  </body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>归并排序</title>
+  </head>
+  <body>
+    <script>
+      const mergeSort = (array) => {
+          //递归结束条件
+        if (array.length < 2) {
+          return array;
+        }
+        let mid = Math.floor(array.length / 2);
+        let left = mergeSort(array.slice(0, mid));
+        let right = mergeSort(array.slice(mid));
+        array = merge(left, right);
+        return array
+      };
+      const merge = (l, r) => {
+          let res = []
+          while(l.length&&r.length){
+            if(l[0]<=r[0]){
+                res.push(l.shift())
+            }else{
+                res.push(r.shift())
+            }
+          }
+          res =l.length?[...res,...l]:[...res,...r];
+          return res
+      };
+      console.log(mergeSort([4,7,2,88,3,0]));
+      //   const bb = ()=>{
+      //     console.log(a());
+      //   };
+      //   bb()
+      //   const a =()=>{
+      //       console.log('aaaaaa');
+      //   }
+    </script>
+  </body>
+</html>
