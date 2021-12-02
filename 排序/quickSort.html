@@ -73,20 +73,6 @@
       }
       console.log(quickSort([5, 2, 8, 44, 2, 10, 75], 0, 6));
      
-      var canPartition = function (nums) {
-        let sum = nums.reduce((pre, cur) => pre + cur);
-        if (sum % 2 === 1) return false;
-        let target = sum / 2;
-        const dp = Array(target + 1).fill(0);
-        for (let i = 0; i < nums.length; i++) {
-          for (let j = target; target >= nums[i]; j--) {
-            dp[j] = Math.max(dp[j], dp[j - nums[i]] + nums[i]);
-          }
-        }
-        return dp[target] === target;
-      };
-      let ar = [1,5,11,5]
-      console.log(canPartition(ar));
     </script>
   </body>
 </html>

@@ -32,6 +32,7 @@
       let isMove = false;
       div.onmousedown = function (e) {
         isMove = true;
+        div.style.transition = ''
         preMoveX = e.pageX;
         preMoveY = e.pageY;
         // console.log(preMoveX, preMoveY);
@@ -48,6 +49,7 @@
         }
       };
       div.onmouseup = function (e) {
+        div.style.transition = 'all 1s linear'
         div.style.left = "0px";
         div.style.top = "0px";
         isMove = false;

@@ -1,7 +1,7 @@
 function jsonp({url,params,callBack}){
     const getUrl = ()=>{
         let dataUrl = '';
-        for(let key of params){
+        for(let key in params){
             if(Object.prototype.hasOwnProperty.call(params,key)){
                 dataUrl +=`${key}=${params[key]}&`;
             }
@@ -19,4 +19,4 @@ function jsonp({url,params,callBack}){
         };
         
     })
-}
+};
