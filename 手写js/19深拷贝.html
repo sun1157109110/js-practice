@@ -20,7 +20,7 @@
         //考虑symbol
         let symbols = Object.getOwnPropertySymbols(target);
         symbols.forEach((symbolKey) => {
-          if (typeof symbolKey === "object" && symbolKey !== null) {
+          if (typeof target[symbolKey] === "object" && symbolKey !== null) {
             cloneTarget[symbolKey] = deepClone(symbolKey);
           } else {
             cloneTarget[symbolKey] = target[symbolKey];
@@ -58,10 +58,15 @@
 
 
 
-      let obj1 = { a: { b: [1, 2] } };
-      let obj2 = deepClone2(obj1);
-      obj1.a = 0
-      console.log(obj1,obj2);
+      // let obj1 = { a: { b: [1, 2] } };
+      // let obj2 = deepClone2(obj1);
+      // obj1.a = 0
+      // console.log(obj1,obj2);
+      let d = new Date()
+      console.log(d);
+      console.log(Date.now());
+      console.log(new Date(Date()));
+      
     </script>
   </body>
 </html>
