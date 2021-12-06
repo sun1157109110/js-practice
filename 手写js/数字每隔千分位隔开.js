@@ -8,19 +8,19 @@ function format(num) {
         intStr = numStrList[0]
         console.log(numStrList);
     };
-   
+    console.log(intStr);
     let len = intStr.length;
     let temp = '';
-    while (len % 3&&len>3) {
-        temp += ',' + intStr.slice(len-3, len) ;
-        intStr = intStr.substring(0,len-2)
+    while (len>3) {
+        temp = ',' + intStr.slice(len-3) + temp ;
+        intStr = intStr.substring(0,len-3)
         len-=3;
     };
-    
+    console.log(temp);
     if(intStr){
        temp = intStr+temp
     };
     return numStrList[1]?temp+'.'+numStrList[1]:temp
     
 };
-console.log(format(12.255));
+console.log(format(849823664.12488));
