@@ -199,6 +199,13 @@ scheduler.taskStart()
 // output: 2 3 1 4
 
 
-
-
+//实现promise串行函数
+function  serialPromise(array) {
+    let res = [];
+    return new Promise((resolve,reject)=>{
+        array.reduce((pre,cur)=>{
+           return pre.then(cur).then((value)=>{res.push(value)})
+        },Promise.resolve()).then(()=>{resolve(res)})
+    })
+}
  
