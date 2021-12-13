@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>两栏布局</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        background-color: #ccc;
+      }
+      /* 第一种float+BFC */
+      /* .container{
+            overflow: hidden;
+            height: 100%;
+        }
+        .left{
+            width: 200px;
+            height: 100%;
+            background-color: deepskyblue;
+            float: left;
+        }
+        .right{
+            height: 100%;
+            background-color: firebrick;
+            overflow: hidden;
+        } */
+      /* 第二种 双浮动  需要知道左盒子宽度*/
+      /* .container{
+            overflow: hidden;
+            height: 100%;
+        }
+        .left{
+            float: left;
+            height: 100%;
+            width: 200px;
+            background-color: #aaa;
+        }
+        .right{
+            float: left;
+            height: 100%;
+            background-color: deepskyblue;
+            width: calc(100% - 200px);
+        } */
+      /* 第三种 左浮动加margin-left*/
+      /* .container{
+            height: 100%;
+            overflow: hidden;
+        }
+        .left{
+            float: left;
+            width: 200px;
+            height: 100%;
+            background-color: dodgerblue;
+        }
+        .right{
+            height: 100%;
+            background-color: fuchsia;
+            margin-left: 200px;
+        } */
+      /* 第四种 双display:inline-block (inlinebox之间有空隙)*/
+      /* 
+        .container{
+            height: 100%;
+
+            font-size: 0;
+        }
+        .left{
+            display: inline-block;
+            background-color: fuchsia;
+            height: 100%;
+            width: 200px;
+        }
+        .right{
+            display: inline-block;
+            background-color: deepskyblue;
+            height: 100%;
+            width: calc(100% - 200px);
+        } */
+      /* 第五种 绝对定位加margin-left */
+      /* .container{
+            height: 100%;
+            position: relative;
+        }
+        .left{
+            position: absolute;
+            height: 100%;
+            background-color: chartreuse;
+            width: 200px;
+        }
+        .right{
+            height: 100%;
+            background-color: deepskyblue;
+            margin-left: 200px;
+        } */
+      /* 第六种 flex */
+      /* .container{
+            height: 100%;
+            display: flex;
+            align-items: flex-start;
+        }
+        .left{
+            flex:0 1 200px;
+            height: 100%;
+            background-color: gold;
+        }
+        .right{
+            flex: 1 1 auto;
+            height: 100%;
+            background-color: green;
+        } */
+      /* 第七种 table */
+      /* .container{
+            height: 100%;
+            display: table;
+            width: 100%;
+        }
+        .left{
+            display: table-cell;
+            height: 100%;
+            background-color: greenyellow;
+            width: 200px;
+        }
+        .right{
+            display: table-cell;
+            height: 100%;
+            background-color: hotpink;
+        } */
+      /* 第八种grid布局 */
+      .container {
+        display: grid;
+        height: 100%;
+        grid-template-columns: 200px auto;
+      }
+      .left{
+          background-color: hotpink;
+      }
+      .right{
+          background-color: lawngreen;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="left"></div>
+      <div class="right"></div>
+    </div>
+  </body>
+</html>

@@ -6,6 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>圣杯布局练习</title>
     <style>
+      html,body{
+        height: 100%;
+        margin: 0;
+        top: 0;
+      }
       .container1 {
         width: 100px;
         height: 50px;
@@ -26,6 +31,13 @@
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 2;
       }
+      .halfone{
+        margin-top: 300px;
+        width: 200px;
+        height: 1px;
+        background-color: black;
+        transform: scale(0.5,0.5);
+      }
     
     </style>
   </head>
@@ -40,5 +52,7 @@
     <div class="container2">
       少年的擦拭布才看见啊SV讲嗷SV偶就傲娇受刺激啊四大皆空
     </div>
+    <br>
+    <div class="halfone"></div>
   </body>
 </html>
