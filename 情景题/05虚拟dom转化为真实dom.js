@@ -23,7 +23,7 @@ function render(VNode){
             }
         };
         //对子节点递归
-        for(let i = 0;i<VNode.length;i++){
+        for(let i = 0;i<VNode.children.length;i++){
             rDom.appendChild(render(VNode.children[i]))
         }
         //如果是文本节点

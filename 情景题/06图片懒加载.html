@@ -32,6 +32,7 @@
   </head>
   <body>
     <div class="imgWarp">
+        <div class="hh">111111111</div>
       <img
         alt="加载"
         class="lazyload"
@@ -69,6 +70,7 @@
             [...imgs].forEach((data)=>{observer.observe(data)})
         };
         imgLazy();
+        console.log(document.getElementsByClassName('imgWarp')[0].outerHTML);
     </script>
   </body>
 </html>

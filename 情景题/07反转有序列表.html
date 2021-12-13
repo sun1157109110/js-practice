@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /*5、通过flex布局，方向设置为列反转 flex-direction:column-reverse*/
+        /* #target
+        {        
+            display:flex;        
+            flex-direction:column-reverse;      
+        } */
+
+        /**6.通过css3属性transform   180度旋转整个列表  再180度旋转当个列表项/
+        /* #target
+        {  
+        transform:rotate(180deg);
+        }
+
+        #target li
+        {  
+        transform:rotate(-180deg);
+        } */
+    </style>
+</head>
+<body>    
+    <ul id="target" style="background:red">        
+        <li>1</li>        
+        <li>2</li>        
+        <li>3</li>        
+        <li>4</li>        
+        <li>5</li>            
+        <li>6</li>    
+    </ul>
+    </body>
+    <script>    
+    //1、innerHTML方法
+    //   var ul = document.getElementById('target');
+    //     var list = ul.getElementsByTagName('li');
+    //     var str = "";
+    //     for(var i = list.length-1; i >= 0; i--){
+    //     str += "<li>" + list[i].innerHTML + "</li>";//     }
+    //     ul.innerHTML=str;    
+
+    //2、reverse()方法
+    // var ul = document.getElementById('target');
+    // var chil_arr = Array.prototype.slice.call(ul.getElementsByTagName('li'), 0);//因为getElementByTagName获取到的是伪数组，所以要进行转换
+    // var str = '';// chil_arr.reverse();
+    // for(var i = 0; i < chil_arr.length; i++){
+    //     str += chil_arr[i].outerHTML;  //outerHTML会返回li节点本身 而不只是里面的数字
+    // }
+    // ul.innerHTML=str;    
+
+
+    //3、直接的dom操作   appendChild
+    // var ul = document.getElementById('target');
+    // var list = ul.querySelectorAll('li');
+    // ul.innerHTML=""
+    // for(var i = list.length-1; i>=0; i--){
+    //     ul.appendChild(list[i].cloneNode(true)); 
+    // }    
+
+
+    // 4、采用文档碎片fragment方法
+    // var ul = document.getElementById('target');
+    // var list = ul.querySelectorAll('li');
+    // ul.innerHTML=""
+    // var fragment = document.createDocumentFragment();
+    // for(var i = list.length-1; i >= 0; i--){
+    //     fragment.appendChild(list[i]);
+    // }
+    // ul.appendChild(fragment);
+    </script>
+</body>
+</html>
