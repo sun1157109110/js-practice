@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .imgWarp {
+        display: flex;
+        flex-direction: column;
+        margin-top: 1000px;
+      }
+      .lazyload {
+        margin-top: 30px;
+        display: inline-block;
+        width: 120px;
+        height: 120px;
+        position: relative;
+      }
+      .lazyload:after {
+        position: absolute;
+        content: "";
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: block;
+        background-color: #ccc;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="imgWarp">
+      <img
+        alt="加载"
+        class="lazyload"
+        src=""
+        data-src="https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1567391611&di=25036e46ab595855036662439ff9aeff&src=http://b-ssl.duitang.com/uploads/blog/201312/14/20131214145220_QQANN.jpeg"
+      />
+      <img
+        alt="加载"
+        class="lazyload"
+        src=""
+        data-src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3617103641,169754897&fm=26&gp=0.jpg"
+      />
+      <img
+        alt="加载"
+        class="lazyload"
+        src=""
+        data-src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2942419345,2278127334&fm=26&gp=0.jpg"
+      />
+    </div>
+    <script>
+        //图片懒加载
+        function imgLazy(){
+            let imgs = document.getElementsByTagName('img');
+            let observer = new IntersectionObserver(
+                (entries)=>{
+                   entries.forEach((item)=>{
+                        if(item.intersecting){
+                            item.target.src = item.target.dataset.src;
+                            observer.unobserve(item.target)// 停止监听已开始加载的图片
+                        }
+                   })
+                },
+                {rootMargin:'0px 0px -100px 0px'}
+            );
+            [...imgs].forEach((data)=>{observer.observe(data)})
+        };
+        imgLazy();
+    </script>
+  </body>
+</html>
