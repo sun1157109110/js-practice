@@ -8,6 +8,7 @@
   </head>
   <body>
     <script>
+      /* 绑定函数自动适应于使用 new 操作符去构造一个由目标函数创建的新实例。当一个绑定函数是用来构建一个值的，原来提供的 this 就会被忽略。不过提供的参数列表仍然会插入到构造函数调用时的参数列表之前 */
       //如果传入thisArg为null或者undefined,则默认为window
       Function.prototype.bind1 = function (context, ...args) {
         //先对this类型作出判断

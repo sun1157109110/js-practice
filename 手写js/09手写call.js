@@ -6,4 +6,4 @@ function call(context = window,...args){
     let res = context[fn](...args);
     delete context[fn];
     return res
-}
+};

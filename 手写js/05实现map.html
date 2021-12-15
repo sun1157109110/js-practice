@@ -1,27 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>实现map</title>
-</head>
-<body>
+  </head>
+  <body>
     <script>
-        Array.prototype.myMap = function(callback){
+      Array.prototype.myMap = function (callback) {
         if (this == undefined) throw new Error("this is null or undefined");
-        if (typeof callback !== "function")throw new TypeError("this is not function");
-        const res = []
+        if (typeof callback !== "function")
+          throw new TypeError("this is not function");
+        const res = [];
         const arr = this;
-        for (let i in arr){
-            if(Object.prototype.hasOwnProperty.call(this,i)){
-                    res.push(callback.call(this,arr[i],i,arr))
-            }
+        for (let i in arr) {
+          if (Object.prototype.hasOwnProperty.call(this, i)) {
+            res.push(callback.call(this, arr[i], i, arr));
+          }
         }
-        return res
+        return res;
       };
-      const list = [1,2,7,3,5]
-      console.log(list.myMap((item)=>item*5));
+      const list = [1, 2, 7, 3, 5];
+      console.log(list.myMap((item) => item * 5));
     </script>
-</body>
+  </body>
 </html>
