@@ -17,36 +17,31 @@
       .container {
         width: 100%;
         height: 100%;
-        padding: 0 150px 0 200px;
+        display: flex;
         background-color: #333;
         box-sizing: border-box;
       }
       .colum {
-        position: relative;
-        float: left;
         height: 100%;
       }
       .mid {
+        flex: 1 1 auto;
         width: 100%;
       }
       .left {
-        width: 200px;
+        flex: 0 1 200px;
         background-color: deepskyblue;
-        margin-left: -100%;
-        left: -200px;
       }
       .right {
-        width: 150px;
+        flex: 0 1 100px;
         background-color: red;
-        margin-left: -150px;
-        right: -150px;
       }
     </style>
   </head>
   <body>
     <div class="container">
-      <div class="colum mid"></div>
       <div class="colum left"></div>
+      <div class="colum mid"></div>
       <div class="colum right"></div>
     </div>
   </body>
