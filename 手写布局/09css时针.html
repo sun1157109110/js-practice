@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>css时针</title>
+    <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        box-sizing: border-box;
+      }
+      .wrapper {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+      .container {
+        position: relative;
+        width: 400px;
+        height: 400px;
+        border: 2px solid black;
+        border-radius: 50%;
+      }
+      .container::after {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        content: "";
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: #666;
+      }
+      .item {
+        z-index: 99;
+        position: absolute;
+        top: 0;
+        left: 50%;
+        margin-left: -3px;
+        width: 6px;
+        height: 200px;
+        border-radius: 50%;
+        background-color: black;
+        rotate: 15deg;
+        transform-origin: center bottom; /* 旋转基准点 */
+        animation: timeStep 60s steps(60) infinite;
+      }
+      .run{
+          animation-play-state: running;
+      }
+      .paused{
+          animation-play-state: paused;
+      }
+      .timerText {
+        z-index: 999;
+        position: absolute;
+        width: 150px;
+        height: 30px;
+        top: 60%;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #eee;
+        text-align: center;
+        line-height: 30px;
+        font-weight: bold;
+      }
+      .control {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .same {
+        margin: 8px;
+        flex: 1;
+      }
+      @keyframes timeStep {
+        0% {
+          transform: rotate(0);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="container">
+        <div class="item"></div>
+        <div class="timerText">当前时间:0s</div>
+      </div>
+      <div class="control">
+        <button class="start same">开始</button>
+        <button class="final same">结束</button>
+      </div>
+    </div>
+    <script>
+      let item = document.getElementsByClassName("item")[0];
+      let btnStart = document.getElementsByClassName("start")[0];
+      let btnFinal = document.querySelector(".final");
+      let secondText = document.querySelector(".timerText");
+      /* 使用animathion动画 */
+      btnStart.onclick = ()=>{
+          item.className = 'item run'
+      };
+      btnFinal.onclick = ()=>{
+          item.className = 'item paused'
+      }
+
+      /* 秒表形式 不能1s的转动 */
+      //   let timer ;
+      //   let count = 0;
+      //   let flag = false;
+      //   const freshTime = () => {
+      //     // if (flag) {
+      //     // }
+      //     timer = window.requestAnimationFrame(() => {
+      //       item.style.transform = `rotate(${count}deg)`;
+      //       count = (count+0.05).toFixed(2)*1;
+      //     //   console.log(count);
+      //       secondText.innerHTML = `当前时间:${((count / 360) * 60).toFixed(2)}s`;
+      //       if (count === 360) count = 0;
+      //       freshTime();
+      //     });
+      //   };
+      //   btnStart.onclick = () => {
+      //     //   flag = true
+      //     freshTime();
+      //     btnStart.disabled = true;
+      //   };
+      //   btnFinal.onclick = () => {
+      //     //   flag = false;
+      //     cancelAnimationFrame(timer);
+      //     btnStart.disabled = false;
+      //   };
+
+      /* 使用setInterval容易导致时间不准确 */
+      //   let timer;
+      //   let count = 0;
+      //   btnStart.onclick = function () {
+      //     if (!timer) {
+      //       timer = setInterval(() => {
+      //         item.style.transform = `rotate(${count}deg)`;
+      //         count += 6;
+      //         if (count === 360) count = 0;
+      //       }, 1000);
+      //     }
+      //   };
+      //   btnFinal.onclick = () => {
+      //     clearInterval(timer);
+      //   };
+    </script>
+  </body>
+</html>

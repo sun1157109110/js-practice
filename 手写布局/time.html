@@ -1,0 +1,107 @@
+
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            display: flex;
+            align-items: center;
+            min-height: 100vh;
+            justify-content: center;
+        }
+        .wrapper{
+            margin: 0 auto;
+        }
+        .container{
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            border: 2px solid gray;
+            position: relative;
+        }
+        .item {
+            background: black;
+            border-radius: 50%;
+            width: 6px;
+            height: 200px;
+            position: absolute;
+            left: 50%;
+            margin-left: -3px;
+            animation-name: rotateCircle;
+            animation-duration: 60s;
+            /* 一秒一转 */
+            animation-timing-function: steps(60);
+            /* 匀速 */
+            /* animation-timing-function: linear; */
+            /* 无限播放 */
+            animation-iteration-count: infinite;
+            /* 旋转基点设置为底部居中 */
+            transform-origin: center bottom;
+        }
+ 
+        /* 动画暂停 */
+        .pause {
+            animation-play-state: paused;
+        }
+ 
+        /* 动画执行 */
+        .run {
+            animation-play-state: running;
+        }
+ 
+        @keyframes rotateCircle {
+            0% {
+                transform: rotate(0deg);
+            }
+ 
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        .control{
+            width: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .control button{
+            flex: 1;
+            margin: 10px;
+        }
+    </style>
+</head>
+ 
+<body>
+    <div class="wrapper">
+        <div class="container">
+            <div class="item pause"></div>
+        </div>
+        <div class="control">
+            <button id="run">开始</button>
+            <button id="pause">暂停</button>
+        </div>
+    </div>
+    
+    <script>
+        // 控制动画开始结束
+        const item = document.querySelector('.item');
+ 
+        document.querySelector('#pause').addEventListener('click', function () {
+            let classlist = ['item'];
+            classlist.push('pause');
+            item.className = classlist.join(" ");
+        })
+ 
+        document.querySelector('#run').addEventListener('click', function () {
+            let classlist = ['item'];
+            classlist.push('run');
+            item.className = classlist.join(" ");
+        })
+    </script>
+</body>
+ 
+</html>
