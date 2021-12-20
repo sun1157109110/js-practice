@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS实现不同内容数量不同布局</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body,
+      html {
+        width: 100%;
+        height: 100vh;
+      }
+      ul {
+        margin: 20px auto;
+        width: 500px;
+        height: 500px;
+        border: 2px solid red;
+        /* 得加上font-size: 0否则会因为空格留白导致li不能在同一行 */
+        font-size: 0;
+      }
+      ul li {
+        display: inline-block;
+        text-align: center;
+        border: 1px solid #000;
+        box-sizing: border-box;
+        font-size: 14px;
+      }
+      li:only-child {
+        width: 100%;
+        height: 100%;
+      }
+      /* 倒数第二个元素也是第一个元素 
+        ~选择相邻元素
+      */
+      li:nth-last-child(2):first-child,
+      li:nth-last-child(2):first-child ~ li {
+        width: 50%;
+        height: calc(100% / 2);
+      }
+      li:nth-last-child(4):first-child,
+      li:nth-last-child(4):first-child~li{
+          width: 50%;
+          height: 50%;
+      }
+      li:nth-last-child(9):first-child,
+      li:nth-last-child(9):first-child~li{
+          width: calc(100% / 3);
+          height: calc(100% / 3);
+      }
+    </style>
+  </head>
+  <body>
+    <ul class="test1">
+      <li class="pic">1</li>
+    </ul>
+    <ul class="test2">
+      <li class="pic2">1</li>
+      <li class="pic2">2</li>
+    </ul>
+    <ul class="test3">
+      <li class="pic3">1</li>
+      <li class="pic3">2</li>
+      <li class="pic3">3</li>
+      <li class="pic3">4</li>
+    </ul>
+    <ul class="test4">
+      <li class="pic4">1</li>
+      <li class="pic4">2</li>
+      <li class="pic4">3</li>
+      <li class="pic4">4</li>
+      <li class="pic4">5</li>
+      <li class="pic4">6</li>
+      <li class="pic4">7</li>
+      <li class="pic4">8</li>
+      <li class="pic4">9</li>
+    </ul>
+  </body>
+</html>
