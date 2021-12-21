@@ -12,3 +12,4 @@ Array.prototype.filter = function(callBack,thisArg){
     }
 
 }
+console.log(typeof '1' === 'string');
