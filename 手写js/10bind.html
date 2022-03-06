@@ -15,21 +15,51 @@
         if (typeof this !== "function")
           throw new TypeError("this is not function");
         const self = this;
-        function F(){
-            //判断是否是构造函数调用,返回的函数为构造函数
-            //若为构造函数调用,this指向new F()的实例对象
-            if(this instanceof F){
-                return new self(...args,...arguments)
-            }
-            //返回一个函数 函数柯里化
-            self.apply(context,[...args,...arguments])
-        };
-        let newF = function(){};
-        newF.prototype = this.prototype;//把this的原型给到newFun的原型
-        F.prototype = new newF();//这里返回新对象作为newBind的原型，由于new出来的内存是新开辟的，后续修改调用bind的函数的原型不会影响到实例
-        return F
+        function F() {
+          //判断是否是构造函数调用,返回的函数为构造函数
+          //若为构造函数调用,this指向new F()的实例对象
+          if (this instanceof F) {
+            return new self(...args, ...arguments);
+          }
+          //返回一个函数 函数柯里化
+          self.apply(context, [...args, ...arguments]);
+        }
+        //F.prototype = this.prototype
+        let newF = function () {};
+        newF.prototype = this.prototype; //把this的原型给到newFun的原型
+        F.prototype = new newF(); //这里返回新对象作为newBind的原型，由于new出来的内存是新开辟的，后续修改调用bind的函数的原型不会影响到实例
+        return F;
       };
-      
+
+      // 测试用例
+      var value = 2;
+      var foo = {
+        value: 1,
+      };
+      function bar(name, age) {
+        this.habit = "shopping";
+        console.log(this.value);
+        console.log(name);
+        console.log(age);
+      }
+      bar.prototype.friend = "kevin";
+
+      var bindFoo = bar.bind2(foo, "Jack"); // bind2
+      var obj = new bindFoo(20); // 返回正确
+      // undefined
+      // Jack
+      // 20
+
+      obj.habit; // 返回正确
+      // shopping
+
+      obj.friend; // 返回正确
+      // kevin
+
+      obj.__proto__.friend = "Kitty"; // 修改原型
+
+      bar.prototype.friend; // 返回错误，这里被修改了
+      // Kitty
     </script>
   </body>
 </html>
