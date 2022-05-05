@@ -5,18 +5,28 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <style>
+      .a {
+        width: 200px;
+        height: 200px;
+        background-color: red;
+      }
+    </style>
   </head>
   <body>
+    <div class="a"></div>
     <script>
-      async function test() {
-       try {
-        const a = await Promise.reject("@");
-       } catch (e) {
-           console.log(e);
-       }
-        
-      }
-      test();
+      // async function test() {
+      //   try {
+      //     const a = await Promise.reject('@')
+      //   } catch (e) {
+      //     console.log(e)
+      //   }
+      // }
+      // test()
+      const div = document.querySelector('.a')
+      div.style.width
+      console.log(div.style.width)
     </script>
   </body>
 </html>

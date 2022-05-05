@@ -1,211 +1,300 @@
 // 定义三种状态
-const PENDING = 'PENDING'; // 进行中
-const FULFILLED = 'FULFILLED'; // 已成功
-const REJECTED = 'REJECTED'; // 已失败
+const PENDING = 'PENDING' // 进行中
+const FULFILLED = 'FULFILLED' // 已成功
+const REJECTED = 'REJECTED' // 已失败
 
 class Promise {
-    constructor(executor) {
-        this.status = PENDING;
-        this.value = undefined;
-        this.reason = undefined;
-        // 成功态回调函数队列
-        this.onFulfilledCallbacks = [];
-        // 失败态回调函数队列
-        this.onRejectedCallbacks = [];
-        //将异步操作的结果传递出去;
-        const resolve = (value) => {
-            if (this.status == PENDING) {
-                this.status = FULFILLED;
-                this.value = value;
-                this.onFulfilledCallbacks.forEach((data) => {
-                    data(this.value)
-                })
-            }
-        };
-        const reject = (reason) => {
-            // 只有进行中状态才能更改状态
-            if (this.status == PENDING) {
-                this.status = REJECTED;
-                this.reason = reason;
-                this.onRejectedCallbacks.forEach((data) => {
-                    data(this.reason)
-                })
-            }
-        };
-        try {
-            executor(resolve, reject)
-        } catch (error) {
-            reject(error)
-        }
+  constructor(executor) {
+    this.status = PENDING
+    this.value = undefined
+    this.reason = undefined
+    // 成功态回调函数队列
+    this.onFulfilledCallbacks = []
+    // 失败态回调函数队列
+    this.onRejectedCallbacks = []
+    //将异步操作的结果传递出去;
+    const resolve = (value) => {
+      if (this.status == PENDING) {
+        this.status = FULFILLED
+        this.value = value
+        this.onFulfilledCallbacks.forEach((data) => {
+          data(this.value)
+        })
+      }
     }
-    then(onFulfilled, onRejected) {
-        //当回调函数不存在时进行 值传递和异常穿透
-        onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : (value) => value
-        onRejected = typeof onRejected === 'function' ? onRejected : (reason) => {
+    const reject = (reason) => {
+      // 只有进行中状态才能更改状态
+      if (this.status == PENDING) {
+        this.status = REJECTED
+        this.reason = reason
+        this.onRejectedCallbacks.forEach((data) => {
+          data(this.reason)
+        })
+      }
+    }
+    try {
+      executor(resolve, reject)
+    } catch (error) {
+      reject(error)
+    }
+  }
+  then(onFulfilled, onRejected) {
+    //当回调函数不存在时进行 值传递和异常穿透
+    onFulfilled =
+      typeof onFulfilled === 'function' ? onFulfilled : (value) => value
+    onRejected =
+      typeof onRejected === 'function'
+        ? onRejected
+        : (reason) => {
             throw reason
-        }
-        const self = this;
-        return new Promise((resolve, reject) => {
-            /* 
+          }
+    const self = this
+    return new Promise((resolve, reject) => {
+      /* 
                1.如果抛出异常,return的promise就会失败,reason就是error
                2.如果回调函数不是promise,return的promise结果成功,value就是返回的值
                3.如果回调函数返回是promise,return的promise结果就是这个promise 的结果
                */
-            if (self.status === PENDING) {
-                self.onFulfilledCallbacks.push(() => {
-                    try {
-                        //模拟微任务
-                        setTimeout(() => {
-                            const result = onFulfilled(self.value)
-                            result instanceof Promise ? result.then(resolve, reject) : resolve(result)
-                        })
-                    } catch (error) {
-                        reject(error)
-                    }
-                })
-                self.onRejectedCallbacks.push(() => {
-                    try {
-                        //模拟微任务
-                        setTimeout(() => {
-                            const result = onRejected(self.reason)
-                            result instanceof Promise ? result.then(resolve, reject) : resolve(result);
-                        })
-                    } catch (error) {
-                        reject(error)
-                    }
-                })
-            } else if (self.status === FULFILLED) {
-                try {
-                    //模拟微任务
-                    setTimeout(() => {
-                        const result = onRejected(self.value)
-                        result instanceof Promise ? result.then(resolve, reject) : resolve(result);
-                    })
-                } catch (error) {
-                    reject(error);
-                }
-            } else if (self.status === REJECTED) {
-                try {
-                    //模拟微任务
-                    setTimeout(() => {
-                        const result = onRejected(self.value)
-                        result instanceof Promise ? result.then(resolve, reject) : resolve(result);
-                    })
-                } catch (error) {
-                    reject(error);
-                }
-            }
-        })
-    }
-    catch (onRejected) {
-        return this.then(null, onRejected)
-    };
-    //将现有对象转化为promise对象
-    static resolve(value) {
-        if (value instanceof Promise) {
-            return value
-        } else {
-            return new Promise((resolve, reject) => {
-                resolve(value)
+      if (self.status === PENDING) {
+        self.onFulfilledCallbacks.push(() => {
+          try {
+            //模拟微任务
+            setTimeout(() => {
+              const result = onFulfilled(self.value)
+              result instanceof Promise
+                ? result.then(resolve, reject)
+                : resolve(result)
             })
+          } catch (error) {
+            reject(error)
+          }
+        })
+        self.onRejectedCallbacks.push(() => {
+          try {
+            //模拟微任务
+            setTimeout(() => {
+              const result = onRejected(self.reason)
+              result instanceof Promise
+                ? result.then(resolve, reject)
+                : resolve(result)
+            })
+          } catch (error) {
+            reject(error)
+          }
+        })
+      } else if (self.status === FULFILLED) {
+        try {
+          //模拟微任务
+          setTimeout(() => {
+            const result = onRejected(self.value)
+            result instanceof Promise
+              ? result.then(resolve, reject)
+              : resolve(result)
+          })
+        } catch (error) {
+          reject(error)
         }
-    };
-    static reject(reason) {
-        if (value instanceof Promise) {
-            return value
-        } else {
-            return new Promise((resolve, reject) => {
-                reject(reason)
-            })
+      } else if (self.status === REJECTED) {
+        try {
+          //模拟微任务
+          setTimeout(() => {
+            const result = onRejected(self.value)
+            result instanceof Promise
+              ? result.then(resolve, reject)
+              : resolve(result)
+          })
+        } catch (error) {
+          reject(error)
         }
-    };
-    static all(promiseArr) {
-        return new Promise((resolve, reject) => {
-            let values = [];
-            let count = 0;
-            promiseArr.forEach((promise, index) => {
-                Promise.resolve(promise).then((value) => {
-                        values[index] = value;
-                        count++;
-                        if (count === values.length) resolve(values);
-                    },
-                    (error) => {
-                        reject(error)
-                    }
-                )
-            })
-        })
+      }
+    })
+  }
+  catch(onRejected) {
+    return this.then(null, onRejected)
+  }
+  //将现有对象转化为promise对象
+  static resolve(value) {
+    if (value instanceof Promise) {
+      return value
+    } else {
+      return new Promise((resolve, reject) => {
+        resolve(value)
+      })
     }
-    static race(promiseArr) {
-        //有一个率先成功 就返回成功的promise实例
-        return new Promise((resolve, reject) => {
-            promiseArr.forEach((promise, index) => {
-                Promise.resolve(promise).then((value) => {
-                        resolve(value)
-                    },
-                    (error) => {
-                        reject(error)
-                    }
-                )
-            })
-        })
+  }
+  static reject(reason) {
+    if (value instanceof Promise) {
+      return value
+    } else {
+      return new Promise((resolve, reject) => {
+        reject(reason)
+      })
     }
+  }
+  static all(promiseArr) {
+    return new Promise((resolve, reject) => {
+      let values = []
+      let count = 0
+      promiseArr.forEach((promise, index) => {
+        Promise.resolve(promise).then(
+          (value) => {
+            values[index] = value
+            count++
+            if (count === values.length) resolve(values)
+          },
+          (error) => {
+            reject(error)
+          }
+        )
+      })
+    })
+  }
+  static race(promiseArr) {
+    //有一个率先成功 就返回成功的promise实例
+    return new Promise((resolve, reject) => {
+      promiseArr.forEach((promise, index) => {
+        Promise.resolve(promise).then(
+          (value) => {
+            resolve(value)
+          },
+          (error) => {
+            reject(error)
+          }
+        )
+      })
+    })
+  }
+  //Promise.allSettled
+  static allSettled(PromiseArr) {
+    return new Promise((resolve, reject) => {
+      if (!Array.isArray(PromiseArr)) {
+        throw new Error('arguments must be an array')
+      }
+      const len = PromiseArr
+      const res = []
+      function handlePromise(i, item) {
+        res[i] = item
+        len--
+        if (len === 0) {
+          resolve(res)
+        }
+      }
+      for (let i = 0; i < len; i++) {
+        Promise.resolve(PromiseArr[i]).then(
+          (value) => {
+            handlePromise(i, { type: 'fulfilled', value })
+          },
+          (reason) => {
+            handlePromise(i, { type: 'rejected', reason })
+          }
+        )
+      }
+    })
+  }
+  //finally
+  finally(cb) {
+    return this.then(
+      (data) => {
+        return Promise.resolve(cb()).then(() => data)
+      },
+      (err) => {
+        return Promise.resolve(cb()).then(() => {throw err})
+      }
+    )
+  }
 }
-
 
 //实现有并行限制的promise调度器
 class Scheduler {
-    constructor(){
-        this.queue = [];
-        this.maxCount = 2;
-        this.runCount = 0;
+  constructor() {
+    this.queue = []
+    this.maxCount = 2
+    this.runCount = 0
+  }
+  //将promise加入到队列中
+  add(promiseCreator) {
+    this.queue.push(promiseCreator)
+  }
+  //每次从队列中取出promise并执行 递归调用
+  request() {
+    if (!this.queue || !this.queue.length || this.runCount >= this.maxCount)
+      return
+    this.runCount++
+    this.queue
+      .shift()()
+      .then(() => {
+        this.runCount--
+        this.request()
+      })
+  }
+  //启动函数
+  taskStart() {
+    for (let i = 0; i < this.maxCount; i++) {
+      this.request()
     }
-    //将promise加入到队列中
-    add(promiseCreator) {
-        this.queue.push(promiseCreator)
-    }
-    //每次从队列中取出promise并执行 递归调用
-    request(){
-        if(!this.queue||!this.queue.length||this.runCount>=this.maxCount)return;
-        this.runCount++;
-        this.queue.shift()().then(()=>{
-            this.runCount--;
-            this.request();
-        })
-    }
-    //启动函数
-    taskStart(){
-        for(let i = 0;i<this.maxCount;i++){
-            this.request()
-        }
-    }
+  }
 }
 
-const timeout = time => new Promise(resolve => {
-    setTimeout(resolve, time);
-})
+const timeout = (time) =>
+  new Promise((resolve) => {
+    setTimeout(resolve, time)
+  })
 
-const scheduler = new Scheduler();
+const scheduler = new Scheduler()
 
 const addTask = (time, order) => {
-    scheduler.add(() => timeout(time).then(() => console.log(order)))
+  scheduler.add(() => timeout(time).then(() => console.log(order)))
 }
 
-addTask(1000, '1');
-addTask(500, '2');
-addTask(300, '3');
-addTask(400, '4');
+addTask(1000, '1')
+addTask(500, '2')
+addTask(300, '3')
+addTask(400, '4')
 scheduler.taskStart()
 // output: 2 3 1 4
 
-
 //实现promise串行函数
-function  serialPromise(array) {
-    let res = [];
-    return new Promise((resolve,reject)=>{
-        array.reduce((pre,cur)=>{
-           return pre.then(cur).then((value)=>{res.push(value)})
-        },Promise.resolve()).then(()=>{resolve(res)})
-    })
+function serialPromise(array) {
+  let res = []
+  return new Promise((resolve, reject) => {
+    array
+      .reduce((pre, cur) => {
+        return pre.then(cur).then((value) => {
+          res.push(value)
+        })
+      }, Promise.resolve())
+      .then(() => {
+        resolve(res)
+      })
+  })
 }
- 
+
+//promise.all并行请求限制
+function multiRequest(urls, maxNum) {
+  const len = urls.length
+  let count = 0
+  const res = Array(len).fill(false)
+  while (count < maxNum) {
+    next()
+  }
+  function next() {
+    count++
+    return new Promise((resolve, reject) => {
+      if (count >= len) {
+        !res.includes(false) && resolve(res)
+      }
+      console.log(`开始${count},${new Date().toLocaleString()}`)
+      fetch(urls[count])
+        .then((value) => {
+          res[count] = value
+          console.log(`完成${count},${new Date().toLocaleString()}`)
+          if (count < maxNum) next()
+        })
+        .catch((err) => {
+          res[count] = err
+          console.log(`结束${count},${new Date().toLocaleString()}`)
+          if (count < maxNum) next()
+        })
+    })
+  }
+}

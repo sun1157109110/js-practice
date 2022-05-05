@@ -34,5 +34,17 @@ function throttle(fn,time){
             flag = true
         },time)
     }
+};
+
+function throttle(func, time) {
+    let timeout;
+    return function () {
+        if (!timeout) {
+            func.apply(this, arguments);
+            timeout = setTimeout(() => {
+                timeout = null;
+            }, time);
+        }
+    };
 }
 console.log('111');
