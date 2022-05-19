@@ -23,3 +23,5 @@
 // }finally{
 //   console.log(111);
 // }
+// console.log('155'.padStart(7,'0'));
+console.log(new Date('2022-5-14 03:07:45').getTime());
