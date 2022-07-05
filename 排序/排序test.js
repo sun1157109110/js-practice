@@ -14,9 +14,21 @@ function bubbleSort(arr) {
   }
   return arr
 }
-console.log(bubbleSort([1,2,3,4,5]));
+// console.log(bubbleSort([1,2,3,4,5]));
 
 //插入排序
 function insertSort(arr) {
-  
+  for(let i = 1;i<arr.length;i++){
+    let target = i
+    for(let j = i-1;i>=0;j--){
+      if(arr[target]<arr[j]){
+        [arr[target],arr[j]] = [arr[j],arr[target]]
+        target = j
+      }else{
+        break
+      }
+    }
+  }
+  return arr
 }
+console.log(insertSort(arr));
