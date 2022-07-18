@@ -58,6 +58,16 @@
 // //“-”在[]中是区间匹配的意思，所以要转义
 // let res = hd.match(/[^:\d\-,]+/g);
 // console.log(res);
-const rgba = 'rgba(255,20,10,0.54)'
+// const rgba = 'rgba(255,20,10,0.54)'
 
 // console.log(rgba.replace(/\s+/g, '').match(/[.\d]+/g));
+
+// const s = '50a6we8y20x';
+// const arr = s.split(/[\D]+/g).filter(i => i)
+// const sarr = s.split(/\d+/).filter(i => i)
+// console.log(arr);
+// console.log(sarr);
+// console.log(s.match(/\D+/g));
+setInterval(() => {
+  console.log(1);
+}, 1000);
