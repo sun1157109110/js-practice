@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      #canvas{
+        display: block;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+      }
+    </style>
+  </head>
+  <body>
+    <canvas
+      id="canvas"
+      width="300"
+      height="300"
+      style="border: 1px solid #ccc"
+    ></canvas>
+    <span>hahahhaha</span>
+    <script>
+      let cnv = document.getElementById("canvas");
+      const context = cnv.getContext("2d");
+      // context.strokeStyle='pink';
+      // context.strokeRect(100, 100, 100, 100);
+      //矩形
+      // context.fillStyle='pink';
+      // context.fillRect(100, 100, 100, 100);
+      //三角形
+      // context.lineTo(50, 50);
+      // context.lineTo(50, 100);
+      // context.lineTo(100, 100);
+      // context.lineTo(50, 50);
+      // context.closePath();
+      // context.lineJoin='round';
+      // context.lineWidth=20;
+      // context.beginPath();
+      // context.arc(150, 150,100, Math.PI / 180 * 0, Math.PI / 180 * 360,);
+      // context.closePath();
+      // context.stroke();
+      context.font = "60px Arial";
+      context.fillText("雷猴", 30, 90);
+    </script>
+  </body>
+</html>

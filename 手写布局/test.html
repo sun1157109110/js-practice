@@ -5,36 +5,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <style></style>
+    <style>
+      .triangle{
+        width: 0;
+        height: 0;
+        border: 50px solid transparent;
+        border-bottom-color: red;
+      }
+    </style>
   </head>
   <body>
+    <div class="triangle"></div>
     <script>
-      // class A {
-      //   constructor() {
-      //     this.b = 0
-      //   }
-      //   a = 1
-      //   hhh() {
-      //     console.log(this)
-      //   }
-      //   ggg = () => {
-      //     console.log(this)
-      //   }
-      // }
-      // let q = new A()
-      var value = 2
-      var myObj = { value: 3 }
-      var add = function (a, b) {
-        return a + b
-      }
-      myObj.double = function () {
-        var helper = function () {
-          this.value = add(this.value, this.value)
-          console.log(this.value)
-        }
-        helper.call(myObj)
-      }
-      myObj.double()
+      
     </script>
   </body>
 </html>
