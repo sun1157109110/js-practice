@@ -10,12 +10,12 @@
         padding: 0;
         margin: 0;
       }
-      #canvas{
+      #canvas {
         display: block;
         position: absolute;
         left: 50%;
         top: 50%;
-        transform: translate(-50%,-50%);
+        transform: translate(-50%, -50%);
       }
     </style>
   </head>
@@ -47,8 +47,71 @@
       // context.arc(150, 150,100, Math.PI / 180 * 0, Math.PI / 180 * 360,);
       // context.closePath();
       // context.stroke();
-      context.font = "60px Arial";
-      context.fillText("雷猴", 30, 90);
+      // context.font = "60px Arial";
+      // context.fillText("雷猴", 30, 90);
+      // async function* asyncPool(concurrency, iterable, iteratorFn) {
+      //   const executing = new Set();
+      //   async function consume() {
+      //     const [promise, value] = await Promise.race(executing);
+      //     executing.delete(promise);
+      //     return value;
+      //   }
+      //   for (const item of iterable) {
+      //     // Wrap iteratorFn() in an async fn to ensure we get a promise.
+      //     // Then expose such promise, so it's possible to later reference and
+      //     // remove it from the executing pool.
+      //     const promise = (async () => await iteratorFn(item, iterable))().then(
+      //       (value) => [promise, value]
+      //     );
+      //     executing.add(promise);
+      //     if (executing.size >= concurrency) {
+      //       yield await consume();
+      //     }
+      //   }
+      //   while (executing.size) {
+      //     yield await consume();
+      //   }
+      // }
+      const timeout = (ms) => new Promise((resolve) => setTimeout(() => resolve(ms), ms));
+      //   async function asyncPoolAll(...args) {
+      //     const results = [];
+      //     for await (const result of asyncPool(...args)) {
+      //       results.push(result);
+      //     }
+      //     return results;
+      //   }
+
+      // ES7 API style available on our previous 1.x version
+      async function asyncPool(poolLimit, iterable, iteratorFn) {
+        const ret = [];
+        const executing = new Set();
+        for (const item of iterable) {
+          const p = Promise.resolve().then(() => iteratorFn(item, iterable));
+          ret.push(p);
+          executing.add(p);
+          const clean = () => executing.delete(p);
+          p.then(clean).catch(clean);
+          if (executing.size >= poolLimit) {
+            await Promise.race(executing);
+          }
+        }
+        return Promise.all(ret);
+      }
+      (async function () {
+        const results = await asyncPool(
+          2,
+          [1000, 5000, 3000, 2000],
+          timeout
+        );
+        console.log(results);
+        // for await (const ms of asyncPool(
+        //   2,
+        //   [1000, 5000, 3000, 2000],
+        //   timeout
+        // )) {
+        //   console.log(ms);
+        // }
+      })();
     </script>
   </body>
 </html>
