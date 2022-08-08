@@ -16,7 +16,7 @@ function deepClone(target, hash = new WeakMap()) {
     //考虑Date,Reg
     for (let i in target) {
         if (Object.prototype.hasOwnProperty.call(target, i)) {
-            clone[i] = typeof target[i] === 'object' && target[i] !== null ? deepClone(target[i], hash) : target[i];
+            // clone[i] = typeof target[i] === 'object' && target[i] !== null ? deepClone(target[i], hash) : target[i];
             if (typeof target[i] === 'object' && target[i] !== null) {
                 clone[i] = deepClone(target[i], hash)
             } else if (target[i] instanceof Date){

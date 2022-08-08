@@ -3,7 +3,7 @@ const PENDING = 'PENDING' // 进行中
 const FULFILLED = 'FULFILLED' // 已成功
 const REJECTED = 'REJECTED' // 已失败
 
-class Promise {
+class myPromise {
   constructor(executor) {
     this.status = PENDING
     this.value = undefined
@@ -140,7 +140,7 @@ class Promise {
           (value) => {
             values[index] = value
             count++
-            if (count === values.length) resolve(values)
+            if (count === promiseArr.length) resolve(values)
           },
           (error) => {
             reject(error)
@@ -201,6 +201,21 @@ class Promise {
         return Promise.resolve(cb()).then(() => {throw err})
       }
     )
+  }
+  static any(promises) {
+    // resolve必须等到有一个成功的结果
+    // reject所有的都失败才执行reject
+    const reasons = [];
+    return new HYPromise((resolve, reject) => {
+      promises.forEach((promise) => {
+        promise.then(resolve, (err) => {
+          reasons.push(err);
+          if (reasons.length === promises.length) {
+            reject(new AggregateError(reasons));
+          }
+        });
+      });
+    });
   }
 }
 
