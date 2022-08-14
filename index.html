@@ -130,16 +130,16 @@
        // Promise.resolve(fn()).then((res)=>{
        //   console.log(res);
        // })
-       const fn = (async()=>{
-       for (let i = 0; i <5; i++) {
-         console.log(i);
-         await Promise.resolve(new Promise((resolve, reject) => {
-           console.log('@@@@@@@@@@@');
-         })).then(()=>{console.log('@');})
-         console.log(222);
-      }
-      })()
-      console.log('1111');
+      //  const fn = (async()=>{
+      //  for (let i = 0; i <5; i++) {
+      //    console.log(i);
+      //    await Promise.resolve(new Promise((resolve, reject) => {
+      //      console.log('@@@@@@@@@@@');
+      //    })).then(()=>{console.log('@');})
+      //    console.log(222);
+      // }
+      // })()
+      // console.log('1111');
       // console.log(fn);
     </script>
   </body>
