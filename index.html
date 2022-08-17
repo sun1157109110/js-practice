@@ -28,108 +28,111 @@
     ></canvas>
     <span>hahahhaha</span>
     <script>
-       let cnv = document.getElementById("canvas");
-       const context = cnv.getContext("2d");
-       // context.strokeStyle='pink';
-       // context.strokeRect(100, 100, 100, 100);
-       //矩形
-       // context.fillStyle='pink';
-       // context.fillRect(100, 100, 100, 100);
-       //三角形
-       // context.lineTo(50, 50);
-       // context.lineTo(50, 100);
-       // context.lineTo(100, 100);
-       // context.lineTo(50, 50);
-       // context.closePath();
-       // context.lineJoin='round';
-       // context.lineWidth=20;
-       // context.beginPath();
-       // context.arc(150, 150,100, Math.PI / 180 * 0, Math.PI / 180 * 360,);
-       // context.closePath();
-       // context.stroke();
-       // context.font = "60px Arial";
-       // context.fillText("雷猴", 30, 90);
-       // async function* asyncPool(concurrency, iterable, iteratorFn) {
-       //   const executing = new Set();
-       //   async function consume() {
-       //     const [promise, value] = await Promise.race(executing);
-       //     executing.delete(promise);
-       //     return value;
-       //   }
-       //   for (const item of iterable) {
-       //     // Wrap iteratorFn() in an async fn to ensure we get a promise.
-       //     // Then expose such promise, so it's possible to later reference and
-       //     // remove it from the executing pool.
-       //     const promise = (async () => await iteratorFn(item, iterable))().then(
-       //       (value) => [promise, value]
-       //     );
-       //     executing.add(promise);
-       //     if (executing.size >= concurrency) {
-       //       yield await consume();
-       //     }
-       //   }
-       //   while (executing.size) {
-       //     yield await consume();
-       //   }
-       // }
-       const sleep = (time)=>{
-         return new Promise((resolve, reject) => {
-           setTimeout(resolve,time)
-         })
-       }
-       const timeout = async(ms) =>
-         new Promise(async (resolve) => {console.log('我开始了');;setTimeout(() => resolve(ms), ms)});
-       //   async function asyncPoolAll(...args) {
-       //     const results = [];
-       //     for await (const result of asyncPool(...args)) {
-       //       results.push(result);
-       //     }
-       //     return results;
-       //   }
+      let cnv = document.getElementById("canvas");
+      const context = cnv.getContext("2d");
+      // context.strokeStyle='pink';
+      // context.strokeRect(100, 100, 100, 100);
+      //矩形
+      // context.fillStyle='pink';
+      // context.fillRect(100, 100, 100, 100);
+      //三角形
+      // context.lineTo(50, 50);
+      // context.lineTo(50, 100);
+      // context.lineTo(100, 100);
+      // context.lineTo(50, 50);
+      // context.closePath();
+      // context.lineJoin='round';
+      // context.lineWidth=20;
+      // context.beginPath();
+      // context.arc(150, 150,100, Math.PI / 180 * 0, Math.PI / 180 * 360,);
+      // context.closePath();
+      // context.stroke();
+      // context.font = "60px Arial";
+      // context.fillText("雷猴", 30, 90);
+      // async function* asyncPool(concurrency, iterable, iteratorFn) {
+      //   const executing = new Set();
+      //   async function consume() {
+      //     const [promise, value] = await Promise.race(executing);
+      //     executing.delete(promise);
+      //     return value;
+      //   }
+      //   for (const item of iterable) {
+      //     // Wrap iteratorFn() in an async fn to ensure we get a promise.
+      //     // Then expose such promise, so it's possible to later reference and
+      //     // remove it from the executing pool.
+      //     const promise = (async () => await iteratorFn(item, iterable))().then(
+      //       (value) => [promise, value]
+      //     );
+      //     executing.add(promise);
+      //     if (executing.size >= concurrency) {
+      //       yield await consume();
+      //     }
+      //   }
+      //   while (executing.size) {
+      //     yield await consume();
+      //   }
+      // }
+      const sleep = (time) => {
+        return new Promise((resolve, reject) => {
+          setTimeout(resolve, time);
+        });
+      };
+      const timeout = async (ms) =>
+        new Promise(async (resolve) => {
+          console.log("我开始了");
+          setTimeout(() => resolve(ms), ms);
+        });
+      //   async function asyncPoolAll(...args) {
+      //     const results = [];
+      //     for await (const result of asyncPool(...args)) {
+      //       results.push(result);
+      //     }
+      //     return results;
+      //   }
 
-       // ES7 API style available on our previous 1.x version
-       // async function asyncPool(poolLimit, iterable, iteratorFn) {
-       //   const ret = [];
-       //   const executing = new Set();
-       //   for (const item of iterable) {
-       //     const p = Promise.resolve(iteratorFn(item, iterable));
-       //     console.log('p',p);
-       //     ret.push(p);
-       //     executing.add(p);
-       //     const clean = () => executing.delete(p);
-       //     p.then(clean).catch(clean);
-       //     if (executing.size >= poolLimit) {
-       //       console.log(executing);
-       //       await Promise.race(executing);
-       //     }
-       //   }
-       //   return Promise.all(ret);
-       // }
-       // (async function () {
-       //   const results = await asyncPool(
-       //     2,
-       //     [1000, 5000, 3000, 2000],
-       //     timeout
-       //   );
-       //   console.log(results);
-       //   // for await (const ms of asyncPool(
-       //   //   2,
-       //   //   [1000, 5000, 3000, 2000],
-       //   //   timeout
-       //   // )) {
-       //   //   console.log(ms);
-       //   // }
-       // })();
-       // const fn = ()=>{
-       //   throw 'aaaa'
-       //   return 1
-       // }
-       // // Promise.resolve(fn()).then((res)=>{
-       // //   console.log(res);
-       // // })
-       // Promise.resolve(fn()).then((res)=>{
-       //   console.log(res);
-       // })
+      // ES7 API style available on our previous 1.x version
+      // async function asyncPool(poolLimit, iterable, iteratorFn) {
+      //   const ret = [];
+      //   const executing = new Set();
+      //   for (const item of iterable) {
+      //     const p = Promise.resolve(iteratorFn(item, iterable));
+      //     console.log('p',p);
+      //     ret.push(p);
+      //     executing.add(p);
+      //     const clean = () => executing.delete(p);
+      //     p.then(clean).catch(clean);
+      //     if (executing.size >= poolLimit) {
+      //       console.log(executing);
+      //       await Promise.race(executing);
+      //     }
+      //   }
+      //   return Promise.all(ret);
+      // }
+      // (async function () {
+      //   const results = await asyncPool(
+      //     2,
+      //     [1000, 5000, 3000, 2000],
+      //     timeout
+      //   );
+      //   console.log(results);
+      //   // for await (const ms of asyncPool(
+      //   //   2,
+      //   //   [1000, 5000, 3000, 2000],
+      //   //   timeout
+      //   // )) {
+      //   //   console.log(ms);
+      //   // }
+      // })();
+      // const fn = ()=>{
+      //   throw 'aaaa'
+      //   return 1
+      // }
+      // // Promise.resolve(fn()).then((res)=>{
+      // //   console.log(res);
+      // // })
+      // Promise.resolve(fn()).then((res)=>{
+      //   console.log(res);
+      // })
       //  const fn = (async()=>{
       //  for (let i = 0; i <5; i++) {
       //    console.log(i);
@@ -141,6 +144,45 @@
       // })()
       // console.log('1111');
       // console.log(fn);
+      // const obj = {
+      //   foo: "foo1",
+      //   bar1: function () {
+      //     console.log(this.foo);
+      //   },
+      //   bar2: function () {
+      //     var arr = () => {
+      //       console.log(this.foo);
+      //     };
+      //     arr();
+      //   },
+      //   bar3: () => {
+      //     console.log(this.foo);
+      //   },
+      // };
+      // let foo = 'foo2'
+      // obj.bar3()
+
+      // document.addEventListener("visibilitychange", () => {
+      //   // '窗口切换事件激活visible-显示，hidden-隐藏
+      //   if (document.visibilityState === "visible") {
+      //     console.log("切屏了");
+      //     //下面就是一堆判断用户是否在线的逻辑
+      //     //.......
+      //   }
+      // });
+      document.onvisibilitychange = ()=>{console.log('哈哈');}
+      window.onmouseleave =
+        window.onblur =
+        window.onmouseout =
+        document.onmouseleave =
+        document.onblur =
+        document.onmouseout =
+        document.body.onmouseleave =
+        document.body.onblur =
+        document.body.onmouseout =
+        onmouseleave =
+        onblur =
+          onmouseout = null
     </script>
   </body>
 </html>

@@ -1,29 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <style>
-    .box{
-      /* float: left; */
-      /* position: absolute; */
-      width: 300px;
-      height: 300px;
-      border: 5px solid red;
-    }
-    .t{
-      width: 600px;
-      height: 600px;
-      background-color: blue;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
 </head>
+
 <body>
-  <div class="box"></div>
-  <div class="t">哈哈哈哈</div>
-  <script>
-  </script>
+     <h1>检测学员切换页面</h1>
+    <span class="second"></span>
+    <span class="frequency"></span>
+    <script>
+        var second = document.querySelector('.second');
+        var frequency = document.querySelector('.frequency');
+        document.addEventListener("visibilitychange", function () 
+        {
+            console.log(document.visibilityState);
+            if (document.visibilityState == 'hidden')
+            {
+                document.title = '同学，你走神了哦';
+            } else if (document.visibilityState == 'visible')
+            {
+                document.title = '上课啦！';
+            }
+        });
+        let num = 0  // 切换的秒数
+        let timer = null  // 定时器
+        let leave = 0  // 切换了几次
+        window.onfocus = function ()
+        {
+            clearInterval(timer)
+            leave++
+            second.innerHTML = `请注意 您切屏了！ 总共离开 ${num}秒`
+            frequency.innerHTML = `您离开了 ${leave}次`
+
+        };
+        window.onblur = function ()
+        {
+            timer = setInterval(() =>
+            {
+                num++
+            }, 1000)
+        };
+    </script>
 </body>
 </html>
+
+
+// window.onmouseleave = window.onblur = window.onmouseout = document.onmouseleave = document.onblur = document.onmouseout = document.body.onmouseleave = document.body.onblur = document.body.onmouseout = onmouseleave = onblur = onmouseout = null;
