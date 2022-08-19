@@ -2,7 +2,7 @@ function bind(context, ...args) {
     //判断this类型
     if (typeof this !== 'function') throw new TypeError('this is not function');
     const fn = this;
-    function Fn() {
+    function F() {
         //原型
         if (this instanceof Fn) {
             return new fn(...args, ...arguments)

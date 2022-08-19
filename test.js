@@ -273,26 +273,33 @@
 //   }
 // }
 // console.log(obj.bar3());
-function util (func) {
-  return (...arg) => new Promise((resolve, reject) => {
-    console.log('arg',arg);
-    console.log(func);
-    func(...arg, (err, ...arg1) => {
-      if (err) reject(err)
-      else resolve(arg1)
-    })
-  })
+// function util (func) {
+//   return (...arg) => new Promise((resolve, reject) => {
+//     console.log('arg',arg);
+//     console.log(func);
+//     func(...arg, (err, ...arg1) => {
+//       if (err) reject(err)
+//       else resolve(arg1)
+//     })
+//   })
+// }
+// const obj = {
+//   getData (callback) {
+//     console.log(callback);
+//     callback(null, 'Niko', 18) // 返回两个参数，姓名和年龄
+//   }
+// }
+
+// // 这时使用promisify肯定是不行的
+// // 因为Promise.resolve只接收一个参数，所以我们只会得到 Niko
+
+// util(obj.getData)().then((res)=>{console.log(...res)}) // Niko
+const obj = {name:'@'}
+const o = {name:'hahahah'}
+function fn(params) {
+  console.log(this.name);
 }
-const obj = {
-  getData (callback) {
-    console.log(callback);
-    callback(null, 'Niko', 18) // 返回两个参数，姓名和年龄
-  }
-}
-
-// 这时使用promisify肯定是不行的
-// 因为Promise.resolve只接收一个参数，所以我们只会得到 Niko
-
-util(obj.getData)().then((res)=>{console.log(...res)}) // Niko
-
+const func = fn.bind(obj);
+const f = func.bind(o);
+f()
 
