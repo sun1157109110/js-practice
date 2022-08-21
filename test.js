@@ -294,12 +294,42 @@
 // // 因为Promise.resolve只接收一个参数，所以我们只会得到 Niko
 
 // util(obj.getData)().then((res)=>{console.log(...res)}) // Niko
-const obj = {name:'@'}
-const o = {name:'hahahah'}
-function fn(params) {
-  console.log(this.name);
-}
-const func = fn.bind(obj);
-const f = func.bind(o);
-f()
 
+function quickSort(num,start,end){
+  if(end-start<1)return
+  let l = start;
+  let r = end;
+  let target = num[start];
+  while(l<r){
+      while(l<r&&num[r]>=target)r--;
+   if(l<r){
+          [num[l],num[r]] = [num[r],num[l]];
+          l++;
+      }
+      while(l<r&&num[l]<=target)l++;
+      if(l<r){
+         [num[l],num[r]] = [num[r],num[l]];
+          r--;
+      }
+  }
+  quickSort(num,start,l-1);
+  quickSort(num,l+1,end);
+  return num
+}
+console.log(quickSort([3,1,2,6,5],0,4))
+function throttle(fn,time){
+  let begin = 0;
+  return function(){
+      let now = Date.now();
+      if(now-begin>time){
+          begin = now
+          fn.apply(this,arguments)
+      }
+  }
+}
+function fn(){
+  console.log('@@@')
+}
+
+let func = throttle(fn,1000)
+setInterval(func,100)

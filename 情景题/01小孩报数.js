@@ -25,19 +25,3 @@ function lastChild(num, count) {
 
 };
 // console.log(lastChild(30,3));
-var startTime = new Date().getTime();
-var count = 0;
-//耗时任务
-setInterval(function(){
-    var i = 0;
-    while(i++ < 100000000);
-}, 0);
-
-
-setInterval(function(){
-    count++;
-    console.log(count + ' --- ' + (Date.now() - (startTime+count*1000)));
-}, 1000);
-
-const a;
-console.log(a);

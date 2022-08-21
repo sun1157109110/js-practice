@@ -15,3 +15,5 @@ function bind(context, ...args) {
     F.prototype = new newF();
     return F;
 }
+//所以无论foo执行多少bind 都是第一次bind的对象！
+//后面的bind只能改变上一个bind的this指向，例如foo.bind(obj).bind(obj2) 改变的是 foo.bind(obj)的this指向是obj2； 最终foo执行是的绑定的this是由第一次bind的对象决定，即foo.bind(obj)的obj
