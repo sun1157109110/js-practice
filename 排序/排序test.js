@@ -1,4 +1,5 @@
 //冒泡排序
+//时间O(n2) 空间O(1) 稳定
 const arr = [5, 3, 7, 1, 3, 90, 6];
 
 function bubbleSort(arr) {
@@ -17,6 +18,8 @@ function bubbleSort(arr) {
 // console.log(bubbleSort([1,2,3,4,5]));
 
 //插入排序
+//直接插入 O(n2) 空间O(1) 稳定
+//希尔     O(n1.3) 空间O(1) 不稳定
 function insertSort(arr) {
   for (let i = 1; i < arr.length; i++) {
     let target = i
@@ -34,6 +37,8 @@ function insertSort(arr) {
 // console.log(insertSort(arr));
 
 //选择排序
+//直接选择 O(n2) 空间O(1) 不稳定
+//堆排序 O(nlogn) 最坏 O(nlogn) 空间O(1) 稳定
 function selectSort(num) {
   for (let i = 0; i < num.length; i++) {
     let min = i
@@ -48,6 +53,7 @@ function selectSort(num) {
 }
 // console.log(selectSort([1,3,2,7,5]));
 //归并排序
+//O(nlogn) 空间O(1) 稳定
 function mergeSort(num) {
   if (num.length < 2) return num;
   let mid = Math.floor(num.length / 2);
@@ -71,7 +77,7 @@ function merge(l, r) {
 }
 // console.log(mergeSort(arr));
 //快排
-
+//O(nlogn) 最坏O(n2) 空间O(nlogn) 不稳定
 function quickSort(num, start, end) {
   if (end - start < 1) return;
   let l = start,
@@ -93,6 +99,4 @@ function quickSort(num, start, end) {
   quickSort(num, l+1, end)
   return num
 }
-// console.log(quickSort(arr,0,arr.length-1));
-
-console.log([...'sdsad']);
+console.log(quickSort(arr,0,arr.length-1));
