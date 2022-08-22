@@ -1,3 +1,5 @@
+//封装run顺序执行arr里函数 cb最后执行
+
 const fn1 = (next)=>{
   setTimeout(() => {
     next('xx','xx2')
