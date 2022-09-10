@@ -45,3 +45,37 @@ function jsonToTree(data) {
   return res
 }
 console.log(jsonToTree(source));
+
+
+
+
+
+
+
+
+
+
+
+
+//去重版本
+function fn(data) {
+  let res = []
+  let map = {};
+  data.forEach(e => {
+    map[e.id] = e
+  });
+  data.forEach(e => {
+    let parent = map[e.pid];
+    if(parent){
+//       (parent.child||(parent.child=[])).push(e)
+        if(parent.child&&!parent.child.find(i=>i.id===e.id)){
+            parent.child.push(e)
+        }else if(!parent.child){
+            parent.child = [e]
+        }
+    }else{
+      res.push(e)
+    }
+  });
+  return res
+}

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+      .box {
+        display: flex;
+        width: 500px;
+        height: 500px;
+        border: 1px solid red;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-content: center;
+      }
+      .item {
+        width: 33%;
+        height: 33%;
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <div class="item"></div>
+      <div class="item"></div>
+      <div class="item"></div>
+      <div class="item"></div>
+      <div class="item"></div>
+      <div class="item"></div>
+      <div class="item"></div>
+      <div class="item"></div>
+      <div class="item"></div>
+    </div>
+    <script>
+      function Foo() {
+        fn = () => {
+          console.log(1);
+        };
+        return this;
+      }
+      Foo.fn = function () {
+        console.log(2);
+      };
+      Foo.prototype.fn = function () {
+        console.log(3);
+      };
+      var fn = function () {
+        console.log(4);
+      };
+      function fn() {
+        console.log(5);
+      }
+      Foo.fn();
+      fn();
+      Foo().fn();
+      fn();
+      new (Foo.fn)();
+      new Foo().fn();
+      // window.value = "v";
+      // function fn() {
+      //   console.log(this.value);
+      // }
+      // function callArrowFn() {
+      //   const arrowFn = () => {
+      //     console.log(this.value);
+      //   };
+      //   arrowFn();
+      // }
+      // function getArrowFn() {
+      //   const arrowFn = () => {
+      //     console.log(this.value);
+      //   };
+      //   return arrowFn;
+      // }
+      // const objA = {
+      //   value: "a",
+      //   fn: fn,
+      // };
+      // const objB = {
+      //   value: "b",
+      //   fn: callArrowFn,
+      // };
+      // const objC = {
+      //   value: "c",
+      //   fn: getArrowFn(),
+      // };
+      // fn();
+      // objA.fn();
+      // objB.fn();
+      // objC.fn();
+    </script>
+  </body>
+</html>

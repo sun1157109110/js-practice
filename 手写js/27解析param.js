@@ -1,8 +1,8 @@
 //'http://www.domain.com/?user=anonymous&id=123&id=456&city=%E5%8C%97%E4%BA%AC&enabled';
-function parseUrl(url){
+function parseParam(url){
     let obj = {}
     let paramStr = url.split('?')[1];
-    console.log(paramStr);
+    // console.log(paramStr);
     let arr = paramStr.split('&');
     console.log(arr);
     for(let i =0;i<arr.length;i++){
@@ -20,7 +20,7 @@ function parseUrl(url){
             obj[key] = val?val:true
         }
     }
-    console.log(arr);
+    // console.log(arr);
     return obj
 };
-console.log(parseUrl('http://www.domain.com/?user=anonymous&id=123&id=456&city=%E5%8C%97%E4%BA%AC&enabled'));
+console.log(parseParam('http://www.domain.com/?user=anonymous&id=123&id=456&city=%E5%8C%97%E4%BA%AC&enabled'));

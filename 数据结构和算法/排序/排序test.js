@@ -38,7 +38,7 @@ function insertSort(arr) {
 
 //选择排序
 //直接选择 O(n2) 空间O(1) 不稳定
-//堆排序 O(nlogn) 最坏 O(nlogn) 空间O(1) 稳定
+//堆排序 O(nlogn) 最坏 O(nlogn) 空间O(1) 不稳定
 function selectSort(num) {
   for (let i = 0; i < num.length; i++) {
     let min = i

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+      .container {
+        width: 800px;
+        height: 800px;
+        position: absolute;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+        background-color: #ccc;
+      }
+      .swiper {
+        position: relative;
+        display: flex;
+        /* justify-content: center; */
+        align-items: center;
+        width: 300px;
+        height: 300px;
+        /* background-color: blue; */
+        overflow: hidden;
+      }
+      .pre,
+      .next {
+        position: absolute;
+        font-size: 60px;
+        font-weight: bolder;
+        user-select: none;
+        color: grey;
+      }
+      .pre:hover,
+      .next:hover {
+        filter: brightness(130%);
+      }
+      .pre {
+        left: 180px;
+      }
+      .next {
+        right: 180px;
+      }
+      .main {
+        width: 300px;
+        display: flex;
+        /* justify-content: center; */
+        align-items: center;
+        height: 100%;
+      }
+      ul > li {
+        width: 300px;
+        height: 300px;
+        flex:0 0 100%;
+      }
+      .no1 {
+        background-color: red;
+      }
+      .no2 {
+        background-color: blueviolet;
+      }
+      .no3 {
+        background-color: green;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <dib class="swiper">
+        <ul class="main">
+          <li class="no1"></li>
+          <li class="no2"></li>
+          <li class="no3"></li>
+        </ul>
+      </dib>
+      <div class="pre">&lt</div>
+      <div class="next">&gt</div>
+    </div>
+    <script>
+      let num = 3;
+      let index = 0;
+      let distance = 300;
+      let pre = document.querySelector(".pre");
+      let next = document.querySelector(".next");
+      let main = document.querySelector(".main");
+      let swiper = document.querySelector(".swiper");
+      let lists = document.querySelectorAll(".main li");
+      function init() {
+        //复制dom
+        let lastNode = main.lastElementChild;
+        let lastItem = lists[0].cloneNode(true);
+        let firstItem = lastNode.cloneNode(true);
+        main.appendChild(lastItem);
+        main.insertBefore(firstItem, lists[0]);
+        firstItem.style.position = "absolute";
+        firstItem.style.transform = "translateX(-100%)";
+      }
+      init();
+      pre.addEventListener('click',preTo)
+      next.addEventListener("click", nextTo);
+      function preTo() {
+        if (index === 0) {
+          main.style.transition = "none";
+          main.style.transform = `translateX(-${num*100}%)`;
+          main.clientHeight;
+          moveTo(num-1);
+        } else {
+          moveTo(index -1);
+        }
+      }
+      function nextTo() {
+        if (index === num - 1) {
+          main.style.transition = "none";
+          main.style.transform = "translateX(100%)";
+          //防止渲染队列合并渲染
+          main.clientHeight;
+          moveTo(0);
+        } else {
+          moveTo(index + 1);
+        }
+        console.log(index);
+      }
+      function moveTo(i) {
+        main.style.transition = ".5s";
+        main.style.transform = `translateX(-${distance * i}px)`;
+        index = i;
+      }
+    </script>
+  </body>
+</html>

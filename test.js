@@ -295,3 +295,375 @@
 
 // util(obj.getData)().then((res)=>{console.log(...res)}) // Niko
 
+// console.log(false==null);
+// let val = 'smart';
+// const s = 'midea is' + (val==='smart')?'Good':'Perfect'
+// console.log(s);
+
+// 1
+// 5
+// 1 0 12
+// 2 1 1
+// 3 1 45
+// 4 3 5
+// 5 2 1
+// 0 44 4
+// let n = parseInt(readline());
+// let tree = [{
+//   id: 1,
+//   pid: 0,
+//   v: 12,
+//   children: [{
+//     id: 2,
+//     pid: 1,
+//     v: 33,
+//     children: [{
+//       id: 3,
+//       pid: 1,
+//       v: 11
+//     }]
+//   }, {
+//     id: 4,
+//     pid: 1,
+//     v: 55,
+//     children: [{
+//       id: 5,
+//       pid: 4,
+//       v: 66
+//     }]
+//   }]
+// }]
+// var largestValues = function (tree) {
+//   if (!tree) return [];
+//   let queue = [tree[0]];
+//   let res = []
+//   while (queue.length !== 0) {
+//     let len = queue.length
+//     let max = Number.MIN_SAFE_INTEGER
+//     let min = Number.MAX_SAFE_INTEGER
+//     for (let i = 0; i < len; i++) {
+//       let node = queue.shift();
+//       max = Math.max(max,node.v)
+//       min = Math.min(min,node.v)
+//       if (node.children) {
+//         for (let i = 0; i < node.children.length; i++) {
+//           queue.push(node.children[i])
+//         }
+//       }
+//     }
+//     console.log('max',max);
+//     console.log('min',min);
+//     res.push(max-min)
+//   }
+//   return res
+// };
+// console.log(largestValues(tree));
+// function jsonToTree(data) {
+//   let res = []
+//   let map = {};
+//   data.forEach(e => {
+//     map[e.id] = e
+//   });
+//   data.forEach(e => {
+//     let parent = map[e.pid];
+//     if (parent) {
+//       (parent.children || (parent.children = [])).push(e)
+//     } else {
+//       res.push(e)
+//     }
+//   });
+//   return res
+// }
+// while (n--) {
+//   let m = parseInt(readline());
+//   let res = []
+//   while (m--) {
+//     let [id, p, v] = readline().trim().split(' ').map(Number)
+//     res.push({
+//       id,
+//       pid: p,
+//       v
+//     })
+//   }
+//   let avs = []
+//   let arr = jsonToTree(res)
+// }
+// function ListNode(val, next) {
+//   this.val = (val===undefined ? 0 : val)
+//   this.next = (next===undefined ? null : next)
+// }
+// let count =100
+// let num = 0
+// let ret = new ListNode(0,null)
+// let pre = ret
+// while (count--){
+//   let cur = new ListNode(++num,null)
+//   pre.next = cur;
+//   pre = cur
+// }
+// // 请根据题目要求确定返回值类型和参数列表(输入)
+// function solution(head) {
+//   // 在这⾥书写你的代码
+//   let pre = null;
+//     let cur = head;
+//     if(!head)return null
+//     while(cur){
+//         let temp = cur.next;
+//         cur.next = pre;
+//         pre = cur;
+//         cur = temp
+//     }
+//     return pre
+// }
+
+// // 本题面试官未设置测试用例
+// // 请在 main 函数书写自己的测试代码
+// function main() {
+//   // 测试代码参考示例，请根据题目修改
+//   let res = solution(ret.next);
+//   if (res.val === 100) {
+//     console.log('succeed t', res);
+//   } else {
+//     console.log('failed',res);
+//   }
+// }
+
+// function solution(arr) {
+//   // 在这⾥书写你的代码
+//   let map = new Map();
+//   for(let i =0;i<arr.length;i++){
+//     map.set(arr[i],map.get(arr[i])+1||1)
+//   }
+//   return [...map.entries()].sort((a,b)=>b[1]-a[1])[0][0]
+// }
+
+// // 本题面试官未设置测试用例
+// // 请在 main 函数书写自己的测试代码
+// function main() {
+//   // 测试代码参考示例，请根据题目修改
+//   let ret = solution([2,3,5,2,2]);
+//   if (ret === 2) {
+//     console.log('succeed got', ret);
+//   } else {
+//     console.log('failed', ret);
+//   }
+// }
+// main()
+
+// console.log(undefined+1);
+// let len = arr.length;
+// let oddCnt = Math.floor(len/2);
+// let evenCnt = n-oddCnt;
+// let res = Number.MAX_SAFE_INTEGER
+// let even = new Map();
+// let odd =new Map();
+// for(let i =0;i<n;i++){
+//   if(i%2===0){
+//     even.set(arr[i],(even.get(arr[i]+1)||1))
+//   }else{
+//     odd.set(arr[i],(odd.get(arr[i]+1)||1))
+//   }
+// }
+// for(let a of even.keys()){
+//   for(let b of odd.keys()){
+//     if(a===b)continue
+//     res = Math.min(res,evenCnt-even.get(a)+oddCnt-odd.get(b))
+//   }
+// }
+
+// process.stdin.resume();
+// process.stdin.setEncoding('utf-8');
+// let input = '';
+// process.stdin.on('data', (data) => {
+//     input += data;
+// });
+// process.stdin.on('end', () => {
+//     let inputArray = input.split('\n');
+//     let [n,m] = inputArray.shift().split(' ').map(Number)
+//     let arr = inputArray.map(i=>i.split)
+//     function dfs(row,col){
+//         if()
+//     }
+//     /**
+//      * 待实现函数，在此函数中填入答题代码
+//      * doFunc()
+//      */
+//     console.log(4)
+//     process.exit();
+// });
+// function test(arr) {
+//   const m = {}
+//   sss = fn(arr[0]);
+//   table = arr[1].split(' ')
+//   for(let i =0;i<table.length;++i){
+//     m[table[i].toLowerCase()] = i
+//   }
+//   for(let i =0;i<sss.length;i++){
+//     const iiiiindex = m[sss[i].toLowerCase()]
+//     if(iiiiindex){
+//       sss[i] = iiiiindex
+//     }
+//   }
+//   return sss.join(' ')
+
+//   function fn(ssss1) {
+//     let res = [];
+//     let start = 0;
+//     let flag = false;
+//     for(let i =0;i<ssss1.length;i++){
+//       if(ssss1[i] == '\"' && !flag){
+//         flag = true
+//       }else if(ssss1[i] == ' '&& !flag){
+//         res.push(ssss1.slice(start,i))
+//         start = i+1
+//       }else if(ssss1[i] =='\"' && flag){
+//         res.push(ssss1.slice(start,i+1))
+//         start = i+2
+//         flag = false
+//       }
+//     }
+//     res.push(ssss1.slice(start))
+//     return res
+//   }
+// }
+// console.log((0.1*100+0.2*100)/100);
+// var readline = require('readline')
+// // 创建读取行接口对象
+// const rl = readline.createInterface({
+//   input: process.stdin,
+//   output: process.stdout
+// })
+// rl.on('line', function(line) {
+//   //line为输入的单行字符串，split函数--通过空格将该行数据转换为数组。
+//   let [s1,s2]= line.split(' ')
+
+//   console.log(func(line).toString());
+// })
+// var func = function(s) {
+//     const ss = [];
+//     const map = new Map();
+//     map.set('}','{');
+//     map.set(']','[');
+//     map.set(')','(');
+//     let arr = [...map.entries()]
+//     for(let i = 0;i<s.length;i++){
+//         if(!map.has(s[i])){
+//             ss.push(s[i])
+//         }else{
+//             let str = ss.pop();
+//             let res = arr.find((i)=>i[1]===str)
+//             if(map.get(s[i]) !==str )return [res[0],i]
+//         }
+//     }
+//     if(ss.length!==0){
+//         let str = ss.pop();
+//         let res = arr.find((i)=>i[1]===str)
+//         return [res[0],s.length+1]
+//     }
+// };
+// window.value = 'v';
+// function fn() {
+//   console.log(this.value);
+// }
+// function callArrowFn() {
+//   const arrowFn = ()=>{
+//     console.log(this.value);
+//   }
+//   arrowFn()
+// }
+// function getArrowFn() {
+//   const arrowFn = ()=>{
+//     console.log(this.value);
+//   }
+//   return arrowFn
+// }
+// const objA = {
+//   value:'a',
+//   fn:fn
+// }
+// const objB = {
+//   value:'b',
+//   fn: callArrowFn
+// }
+// const objC = {
+//   value:'c',
+//   fn:getArrowFn()
+// }
+// fn()
+// objA.fn();
+// objB.fn();
+// objC.fn()
+// console.log(1-'2');
+// console.log(1+'2');
+// var a = (b=1,c=2);
+// console.log(a,b,c);
+// function f(params) {
+//   return f
+// }
+// console.log(new f() instanceof f);
+// function side(arr) {
+//   arr[0] = arr[2];
+//   console.log(arr);
+// }
+// function a(a,b,c=3) {
+//   c=10;
+//   side(arguments)
+//   return a+b+c
+// }
+// console.log(a(1,1,1));
+
+// (function (params) {
+//   var a=(b=5)
+
+// })()
+// console.log(b);
+// console.log(a);
+
+// var a = 1;
+// var a;
+// console.log(a);
+// function Foo(){
+//   getName = function(){console.log(1);}
+//   return this
+// }
+// Foo.getName = function(){console.log(2);}
+// Foo.prototype.getName = function(){console.log(3);}
+// var getName = function(){console.log(4);}
+// function getName(){console.log(5);}
+// Foo.getName()
+// getName();
+// Foo().getName()
+// getName()
+// const [a=1,b=2,c=3] = [4,null];
+// console.log(a,b,c);
+
+// function fn(arr) {
+//   let res = 0;
+//   arr.sort((a,b)=>a-b)
+//   for(let i = 0;i<arr.length;i++){
+//     for(let j =i+1;j<arr.length;j++){
+//       for(let k = j+1;k<arr.length;k++){
+//         if(arr[i]*arr[i] + arr[j]*arr[j] === arr[k]*arr[k])res++
+//       }
+//     }
+//   }
+//   return res
+// }
+// console.log(fn([3,4,5]));
+// console.log('It"s t-eleven'.split(/\s+/));
+// let obj = {num1:117};
+// let res = obj;
+// obj.child = obj = {num2:935}
+// var x = y = res.child.bun2;
+// console.log(obj.child);
+// console.log(res.num1);
+// console.log(y);
+// hello()
+// var hello = function(){
+//   console.log('1');
+// }
+// function hello(params) {
+//   console.log('2');
+// }
+
+console.log('b'.charCodeAt()-'a'.charCodeAt());

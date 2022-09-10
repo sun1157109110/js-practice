@@ -21,7 +21,7 @@
         let symbols = Object.getOwnPropertySymbols(target);
         symbols.forEach((symbolKey) => {
           if (typeof target[symbolKey] === "object" && target[symbolKey] !== null) {
-            cloneTarget[symbolKey] = deepClone(symbolKey);
+            cloneTarget[symbolKey] = deepClone1(symbolKey);
           } else {
             cloneTarget[symbolKey] = target[symbolKey];
           }
