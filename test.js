@@ -666,4 +666,22 @@
 //   console.log('2');
 // }
 
-console.log('b'.charCodeAt()-'a'.charCodeAt());
+// console.log('b'.charCodeAt() - 'a'.charCodeAt());
+// console.log(1 == true);
+// console.log('' == null);
+// console.log(0 == false);
+
+// console.log(Number.MIN_VALUE>0);
+// let set = new Set([1,1,2])
+// console.log([...set]);
+// console.log([].slice.apply(set));
+// console.log([].map.call(set,o=>o));
+// console.log(Array.from(set));
+
+
+console.log(undefined == null);
+console.log(null == 0);
+console.log(1==true);
+console.log(!NaN);
+console.log(Number(undefined));
+console.log([]!==[]);

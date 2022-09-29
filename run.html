@@ -40,30 +40,46 @@
       <div class="item"></div>
     </div>
     <script>
-      function Foo() {
-        fn = () => {
-          console.log(1);
-        };
-        return this;
+      var name = 117
+      func1()
+      function func1(params) {
+        console.log(this.name);
       }
-      Foo.fn = function () {
-        console.log(2);
-      };
-      Foo.prototype.fn = function () {
-        console.log(3);
-      };
-      var fn = function () {
-        console.log(4);
-      };
-      function fn() {
-        console.log(5);
+      (function(){
+        'use strict';
+        func1()
+      })()
+      "use strict";
+      function fn(params) {
+        console.log(this.name);
       }
-      Foo.fn();
-      fn();
-      Foo().fn();
-      fn();
-      new (Foo.fn)();
-      new Foo().fn();
+      setTimeout(function () {
+        fn.call(this);
+      }, 0);
+      // function Foo() {
+      //   fn = () => {
+      //     console.log(1);
+      //   };
+      //   return this;
+      // }
+      // Foo.fn = function () {
+      //   console.log(2);
+      // };
+      // Foo.prototype.fn = function () {
+      //   console.log(3);
+      // };
+      // var fn = function () {
+      //   console.log(4);
+      // };
+      // function fn() {
+      //   console.log(5);
+      // }
+      // Foo.fn();
+      // fn();
+      // Foo().fn();
+      // fn();
+      // new (Foo.fn)();
+      // new Foo().fn();
       // window.value = "v";
       // function fn() {
       //   console.log(this.value);
