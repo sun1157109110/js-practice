@@ -191,4 +191,11 @@ class Promise {
             });
         });
     }
+    async try (fn) {
+        try {
+            await fn()
+        } catch (e) {
+            return Promise.reject(e)
+        }
+    }
 }

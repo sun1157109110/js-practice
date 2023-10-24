@@ -12,16 +12,16 @@ function multiRequest(urls, maxNum) {
       if (count >= len) {
         !res.includes(false) && resolve(res)
       }
-      console.log(`开始${count},${new Date().toLocaleString()}`)
+      // console.log(`开始${count},${new Date().toLocaleString()}`)
       fetch(urls[count])
         .then((value) => {
           res[count] = value
-          console.log(`完成${count},${new Date().toLocaleString()}`)
+          // console.log(`完成${count},${new Date().toLocaleString()}`)
           if (count < maxNum) next()
         })
         .catch((err) => {
           res[count] = err
-          console.log(`结束${count},${new Date().toLocaleString()}`)
+          // console.log(`结束${count},${new Date().toLocaleString()}`)
           if (count < maxNum) next()
         })
     })

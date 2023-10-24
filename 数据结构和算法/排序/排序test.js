@@ -20,19 +20,18 @@ function bubbleSort(arr) {
 //插入排序
 //直接插入 O(n2) 空间O(1) 稳定
 //希尔     O(n1.3) 空间O(1) 不稳定
-function insertSort(arr) {
-  for (let i = 1; i < arr.length; i++) {
-    let target = i
-    for (let j = i - 1; i >= 0; j--) {
-      if (arr[target] < arr[j]) {
-        [arr[target], arr[j]] = [arr[j], arr[target]]
-        target = j
-      } else {
-        break
+function insertionSort(nums) {
+  // 外循环：已排序元素数量为 1, 2, ..., n
+  for (let i = 1; i < nums.length; i++) {
+      let base = nums[i],
+          j = i - 1;
+      // 内循环：将 base 插入到已排序部分的正确位置
+      while (j >= 0 && nums[j] > base) {
+          nums[j + 1] = nums[j]; // 将 nums[j] 向右移动一位
+          j--;
       }
-    }
+      nums[j + 1] = base; // 将 base 赋值到正确位置
   }
-  return arr
 }
 // console.log(insertSort(arr));
 

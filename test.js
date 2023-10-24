@@ -679,9 +679,13 @@
 // console.log(Array.from(set));
 
 
-console.log(undefined == null);
-console.log(null == 0);
-console.log(1==true);
-console.log(!NaN);
-console.log(Number(undefined));
-console.log([]!==[]);
+// console.log(undefined == null);
+// console.log(null == 0);
+// console.log(1==true);
+// console.log(!NaN);
+// console.log(Number(undefined));
+
+// const b = String("Hello world"); // b === "Hello world" 为 true
+// console.log(b instanceof String); // 为 false
+// console.log(b.length);
+// console.log( ++[[]][+[]]+[+[]]==10 );
