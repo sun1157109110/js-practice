@@ -47,3 +47,5 @@ const timeout = (ms) => new Promise((resolve) => setTimeout(() => resolve(ms), m
 (async()=>{
   console.log(await asyncPool(2, [1000, 5000, 3000, 2000], timeout));
 })()
+
+//https://segmentfault.com/a/1190000020980101

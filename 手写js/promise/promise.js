@@ -180,7 +180,7 @@ class Promise {
         // resolve必须等到有一个成功的结果
         // reject所有的都失败才执行reject
         const reasons = [];
-        return new HYPromise((resolve, reject) => {
+        return new Promise((resolve, reject) => {
             promises.forEach((promise) => {
                 promise.then(resolve, (err) => {
                     reasons.push(err);
@@ -198,4 +198,5 @@ class Promise {
             return Promise.reject(e)
         }
     }
+    //https://www.kancloud.cn/xiaoyulive/frontend/582122
 }
