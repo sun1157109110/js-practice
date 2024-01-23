@@ -55,7 +55,7 @@ class Promise {
                 self.onRejectedCallback.push(() => {
                     try {
                         setTimeout(() => {
-                            const res = onRejected(self.value)
+                            const res = onRejected(self.reason)
                             typeof res instanceof Promise ? res.then(resolve, reject) : resolve(res)
                         });
                     } catch (e) {
@@ -76,7 +76,7 @@ class Promise {
             if (self.status === REJECTED) {
                 try {
                     setTimeout(() => {
-                        const res = onRejected(self.value)
+                        const res = onRejected(self.reason)
                         typeof res instanceof Promise ? res.then(resolve, reject) : resolve(res)
                     });
                 } catch (e) {

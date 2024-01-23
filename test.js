@@ -689,5 +689,4 @@
 // console.log(b instanceof String); // 为 false
 // console.log(b.length);
 // console.log( ++[[]][+[]]+[+[]]==10 );
-console.log(Object.getPrototypeOf(Number.NaN)===Number.prototype)
-console.log(!NaN);
+console.log('#ccc'.slice(0,-2));
