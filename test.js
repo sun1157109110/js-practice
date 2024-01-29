@@ -689,4 +689,29 @@
 // console.log(b instanceof String); // 为 false
 // console.log(b.length);
 // console.log( ++[[]][+[]]+[+[]]==10 );
-console.log('#ccc'.slice(0,-2));
+const depthCacl = (arr) => {
+    let res = 0;
+    let dep = 0
+
+    function recur(arr) {
+        for (let i = 0; i < arr.length; i++) {
+            if (Array.isArray(arr[i])) {
+                dep += 1;
+                res = Math.max(res, dep)
+                recur(arr[i])
+                dep -= 1
+            }
+        }
+    }
+    recur(arr)
+    return res
+}
+
+console.log(depthCacl([
+    [1, 2, [3, 4],
+        [
+            [1], 2
+        ]
+    ],
+    [2, 5], 3, 2, 5, 7
+]));
