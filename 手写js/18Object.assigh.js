@@ -23,18 +23,34 @@ Object.defineProperty(Object,
 
 function deepMerge(target, ...source) {
     //     source
-        // 实现代码
-        function fn(obj1,obj2){
-            for(let key in obj2){
-                obj1[key] = obj1[key]&&obj1[key].toString() === '[object Object]'&&
-                    (obj2[key]&&obj2[key].toString() === '[object Object]')
-                    ?deepMerge(obj1[key],obj2[key]):(obj1[key]=obj2[key])
-            }
-            return obj1
+    // 实现代码
+    // // 如果target(也就是obj1[key])存在，且是对象的话再去调用deepMerge，否则就是obj1[key]里面没这个对象，需要与obj2[key]合并
+    // 如果obj2[key]没有值或者值不是对象，此时直接替换obj1[key]
+    function fn(obj1, obj2) {
+        for (let key in obj2) {
+            obj1[key] = obj1[key] && obj1[key].toString() === '[object Object]' &&
+                (obj2[key] && obj2[key].toString() === '[object Object]') ?
+                fn(obj1[key], obj2[key]) : (obj1[key] = obj2[key])
         }
-    //     target={...target,...fn(source[0],source[1])}
-        return fn(target,source[0])
+        return obj1
     }
-    // console.log(JSON.parse(deepMerge({}, {a: 1, b: {c: 2, d: 3}},{b: {c: 4, e: 5}})))
-    
-    // console.log(deepMerge({a: 1, b: {c: 2, d: 3}},{b: {c: 4, e: 5}}))
+    for(let o of source){
+        target = fn(target,o)
+    }
+    //     target={...target,...fn(source[0],source[1])}
+    return target
+}
+
+function fn(obj1, obj2) {
+    for (let key in obj2) {
+        obj1[key] = obj1[key] && obj1[key].toString() === '[object Object]' &&
+            (obj2[key] && obj2[key].toString() === '[object Object]') ?
+            fn(obj1[key], obj2[key]) : (obj1[key] = obj2[key])
+    }
+    return obj1
+}
+console.log(deepMerge({a:1,b:{c:1}},{b:{c:3,d:6}},{e:666}));
+console.log(Object.assign({a:1},{a:2}));
+// console.log(JSON.parse(deepMerge({}, {a: 1, b: {c: 2, d: 3}},{b: {c: 4, e: 5}})))
+
+// console.log(deepMerge({a: 1, b: {c: 2, d: 3}},{b: {c: 4, e: 5}}))

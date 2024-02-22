@@ -27,6 +27,7 @@ function get(obj, path, defaultValue = undefined) {
   //处理path 可能是字符串也可能是数组
   if (typeof path === 'string') {
     path = path.replace(/\[(\d+)\]/, '.$1').split('.')
+    console.log(path);
   } else if (!Array.isArray(path)) {
     return defaultValue
   }
@@ -44,3 +45,5 @@ const object = {
     }
   }]
 }
+console.log(get(object, 'a[0].b.c'));
+

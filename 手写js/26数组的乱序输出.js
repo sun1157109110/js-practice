@@ -12,4 +12,4 @@ const getRandomArr = (array,count)=>{
     };
     return res
 };
-console.log(getRandomArr([5,8,9,40,26,54,22],3));
+console.log(getRandomArr([5,8,9,40,26,54,22],7));

@@ -23,4 +23,5 @@ console.log(Common.getType(1));
 console.log(Common.getType("str"));
 console.log(Common.getType([]));
 console.log(Common.getType(new Date()));
+console.log(Common.getType(undefined));
 console.log(Object.prototype.toString.call(undefined));

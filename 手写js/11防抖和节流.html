@@ -13,6 +13,7 @@
     <input type="button" id="2" value="节流提交" />
     <script>
       //防抖函数
+      //函数防抖是指在事件被触发 n 秒后再执行回调，如果在这 n 秒内事件又被触发，则重新计时。这可以使用在一些点击请求的事件上，避免因为用户的多次点击向后端发送多次请求。
       btn1 = document.getElementById("1");
       btn1.addEventListener("click", debounce(submit, 2000));
 
@@ -22,13 +23,14 @@
       function debounce(fn, time) {
         let timer = null;
         return function () {
-          if(timer)clearTimeout(timer);
+          if (timer) clearTimeout(timer);
           timer = setTimeout(() => {
             fn.apply(this, arguments);
           }, time);
         };
       }
       //节流函数
+      //函数节流是指规定一个单位时间，在这个单位时间内，只能有一次触发事件的回调函数执行，如果在同一个单位时间内某事件被触发多次，只有一次能生效。节流可以使用在 scroll 函数的事件监听上，通过事件节流来降低事件调用的频率。
       btn2 = document.getElementById("2");
       btn2.addEventListener("click", throttle(submit, 2000));
       //   function throttle(fn, time) {
@@ -43,7 +45,7 @@
       //     };
       //   }
       function throttle(fn, time) {
-          //先把阀门开启
+        //先把阀门开启
         let flag = true;
         return function () {
           if (!flag) return;
@@ -55,10 +57,15 @@
           }, time);
         };
       }
-      let arr = [1,33,2,9,4,5];
+      let arr = [1, 33, 2, 9, 4, 5];
       console.log(arr);
-      console.log([3,2,3,1,2,4,5,5,6,7,7,8,2,3,1,1,1,10,11,5,6,2,4,7,8,5,6].sort());
-      console.log(arr.sort((a,b)=>a-b));
+      console.log(
+        [
+          3, 2, 3, 1, 2, 4, 5, 5, 6, 7, 7, 8, 2, 3, 1, 1, 1, 10, 11, 5, 6, 2, 4,
+          7, 8, 5, 6,
+        ].sort()
+      );
+      console.log(arr.sort((a, b) => a - b));
     </script>
   </body>
 </html>

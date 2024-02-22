@@ -69,4 +69,4 @@ function dropRepeat(arr) {
   }
   return newArr
 }
-console.log(unique(o));
+console.log(dropRepeat(o));

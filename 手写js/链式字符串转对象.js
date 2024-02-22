@@ -30,5 +30,5 @@ function fn(arr) {
   }
   return res
 }
-console.log(fn(["a", "b", "c"]));
+console.log(fn(["a", "b", "c", "d", "e", "f", "g"]));
 
