@@ -689,19 +689,37 @@
 // console.log(b instanceof String); // 为 false
 // console.log(b.length);
 // console.log( ++[[]][+[]]+[+[]]==10 );
-function fn(stocks) {
-    let stack = []
-    let len = stocks.length
-    let res = Array(len).fill(1).map((x,i)=>i+1)
-    console.log(res);
-    for (let i = len - 1; i >= 0; i--) {
-        while (stack.length && stocks[stack[stack.length - 1]] < stocks[i]) {
-            let top = stack.pop();
-            res[top] = top - i
-        }
-        stack.push(i)
+// function fn(stocks) {
+//     let stack = []
+//     let len = stocks.length
+//     let res = Array(len).fill(1).map((x,i)=>i+1)
+//     console.log(res);
+//     for (let i = len - 1; i >= 0; i--) {
+//         while (stack.length && stocks[stack[stack.length - 1]] < stocks[i]) {
+//             let top = stack.pop();
+//             res[top] = top - i
+//         }
+//         stack.push(i)
+//     }
+//     return res
+// }
+// console.log(fn([31,41,48,56,79]));
+// console.log(fn([100,80,60,70,60,75,85]));
+function subSequences(arr, start = 0, current = []) {
+    if (start === arr.length) {
+      return [current]; // 如果已经遍历完整个数组，则返回当前序列
     }
-    return res
-}
-console.log(fn([31,41,48,56,79]));
-console.log(fn([100,80,60,70,60,75,85]));
+   
+    const result = [];
+    // 不包含当前元素的子序列
+    subSequences(arr, start + 1, current).forEach(seq => result.push(seq));
+    // 包含当前元素的子序列
+    subSequences(arr, start + 1, [...current, arr[start]]).forEach(seq => result.push(seq));
+   
+    return result;
+  }
+   
+  // 使用示例
+  console.log(subSequences(arr));
+
+  
