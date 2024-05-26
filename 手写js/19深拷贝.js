@@ -37,8 +37,9 @@ let a = {
 
 };
 a[fn] = 'aaaaaa'
+a.test = new Date();
 // console.log(Object.getOwnPropertySymbols(a));
 for (let i in a) {
     console.log(i);
 };
-console.log(Reflect.ownKeys(a));
+console.log(deepClone(a));

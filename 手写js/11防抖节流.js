@@ -1,16 +1,16 @@
-// //防抖
-// //事件触发后一定时间内回调函数调用 如果在这段时间内事件再次出发 那么重新计时
-// function debounce(fn,time){
-//     let timer = null;
-//     return function(){
-//         if(timer){
-//             clearTimeout(timer)
-//         };
-//         timer = setTimeout(()=>{
-//             fn.apply(this,arguments)
-//         },time)
-//     }
-// }
+//防抖
+//事件触发后一定时间内回调函数调用 如果在这段时间内事件再次出发 那么重新计时
+function debounce(fn,time){
+    let timer = null;
+    return function(){
+        if(timer){
+            clearTimeout(timer)
+        };
+        timer = setTimeout(()=>{
+            fn.apply(this,arguments)
+        },time)
+    }
+}
 
 // //节流 将一段时间内的多次触发变为一次触发
 // function throttle(fn,time){
@@ -55,7 +55,7 @@ function debounce(fn, time) {
     return function () {
         if (!timer) {
             timer = setTimeout(() => {
-                fn().apply(this,arguments)
+                fn.apply(this,arguments)
             }, time);
         }else{
             clearTimeout(timer)

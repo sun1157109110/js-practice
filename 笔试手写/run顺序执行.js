@@ -1,4 +1,4 @@
-//封装run顺序执行arr里函数 cb最后执行
+//封装一个run函数能够顺序执行arr里函数 cb最后执行
 
 const fn1 = (next)=>{
   setTimeout(() => {

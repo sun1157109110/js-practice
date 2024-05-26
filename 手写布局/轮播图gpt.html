@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carousel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .carousel-inner {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        .carousel-item {
+            min-width: 100%;
+        }
+    </style>
+</head>
+<body class="flex justify-center items-center h-screen bg-gray-100">
+    <div class="relative w-96 overflow-hidden rounded-lg shadow-lg">
+        <div class="carousel-inner">
+            <div class="carousel-item">
+                <img src="https://via.placeholder.com/600x300?text=Slide+1" alt="Slide 1" class="w-full">
+            </div>
+            <div class="carousel-item">
+                <img src="https://via.placeholder.com/600x300?text=Slide+2" alt="Slide 2" class="w-full">
+            </div>
+            <div class="carousel-item">
+                <img src="https://via.placeholder.com/600x300?text=Slide+3" alt="Slide 3" class="w-full">
+            </div>
+        </div>
+        <button class="absolute top-1/2 transform -translate-y-1/2 left-2 bg-gray-700 text-white rounded-full p-2" onclick="prevSlide()">&#10094;</button>
+        <button class="absolute top-1/2 transform -translate-y-1/2 right-2 bg-gray-700 text-white rounded-full p-2" onclick="nextSlide()">&#10095;</button>
+    </div>
+
+    <script>
+        let currentIndex = 0;
+        const items = document.querySelectorAll('.carousel-item');
+        const totalItems = items.length;
+
+        function showSlide(index) {
+            currentIndex = (index + totalItems) % totalItems;
+            const offset = -currentIndex * 100;
+            document.querySelector('.carousel-inner').style.transform = `translateX(${offset}%)`;
+        }
+
+        function nextSlide() {
+            showSlide(currentIndex + 1);
+        }
+
+        function prevSlide() {
+            showSlide(currentIndex - 1);
+        }
+
+        // 自动播放功能
+        setInterval(() => {
+            nextSlide();
+        }, 3000);
+    </script>
+</body>
+</html>

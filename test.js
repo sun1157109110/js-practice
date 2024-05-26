@@ -705,21 +705,40 @@
 // }
 // console.log(fn([31,41,48,56,79]));
 // console.log(fn([100,80,60,70,60,75,85]));
-function subSequences(arr, start = 0, current = []) {
-    if (start === arr.length) {
-      return [current]; // 如果已经遍历完整个数组，则返回当前序列
-    }
-   
-    const result = [];
-    // 不包含当前元素的子序列
-    subSequences(arr, start + 1, current).forEach(seq => result.push(seq));
-    // 包含当前元素的子序列
-    subSequences(arr, start + 1, [...current, arr[start]]).forEach(seq => result.push(seq));
-   
-    return result;
-  }
-   
-  // 使用示例
-  console.log(subSequences(arr));
 
-  
+// function filterNullKeys(obj) {
+//   return Object.keys(obj)
+//     .filter(key => obj[key] !== null)
+//     .reduce((result, key) => {
+//       const value = obj[key];
+//       if (typeof value === 'object' && value !== null) {
+//         result[key] = filterNullKeys(value); // 递归处理嵌套对象
+//       } else {
+//         result[key] = value;
+//       }
+//       return result;
+//     }, Array.isArray(obj) ? [] : {}); // 根据原始对象类型创建新对象
+// }
+// console.log(filterNullKeys({a:1,b:[null,1,{a:null,d:222}]}));
+
+// const crypto = require('crypto');
+ 
+// function createMD5(data) {
+//   return crypto.createHash('md5').update(data).digest('hex');
+// }
+ 
+// const originalData = 'Hello, world!';
+// const md5Value = createMD5(originalData);
+// console.log(md5Value); // 输出MD5值
+ 
+// const newData = 'Hello, world!';
+// const newMD5Value = createMD5(newData);
+// if (md5Value === newMD5Value) {
+//   console.log('数据相同');
+// } else {
+//   console.log('数据不同');
+// }
+// console.log(createMD5('1234567'));
+
+
+console.log(parseInt('2'));
