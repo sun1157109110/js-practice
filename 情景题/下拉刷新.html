@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pull to Refresh</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        #content {
+            padding: 20px;
+            min-height: 200vh; /* 使页面足够长，产生滚动条 */
+        }
+        #refresh-indicator {
+            display: none;
+            text-align: center;
+            padding: 10px;
+            background-color: #f0f0f0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div id="refresh-indicator">Refreshing...</div>
+    <div id="content">
+        <p>Scroll down and pull to refresh...</p>
+        <!-- Your content here -->
+    </div>
+
+    <script>
+        let touchStartY = 0;
+        let touchEndY = 0;
+        const refreshThreshold = 100; // Threshold for triggering refresh
+        const refreshIndicator = document.getElementById('refresh-indicator');
+        let isRefreshing = false;
+
+        document.addEventListener('touchstart', (e) => {
+            if (window.scrollY === 0) {
+                touchStartY = e.touches[0].clientY;
+            }
+        });
+
+        document.addEventListener('touchmove', (e) => {
+            if (window.scrollY === 0 && !isRefreshing) {
+                touchEndY = e.touches[0].clientY;
+                const pullDistance = touchEndY - touchStartY;
+                if (pullDistance > 0) {
+                    refreshIndicator.style.display = 'block';
+                    refreshIndicator.style.height = `${Math.min(pullDistance, refreshThreshold)}px`;
+                    e.preventDefault(); // Prevent scrolling
+                }
+            }
+        });
+
+        document.addEventListener('touchend', () => {
+            if (window.scrollY === 0 && touchEndY - touchStartY > refreshThreshold && !isRefreshing) {
+                performRefresh();
+            } else {
+                resetIndicator();
+            }
+            touchStartY = 0;
+            touchEndY = 0;
+        });
+
+        function performRefresh() {
+            isRefreshing = true;
+            refreshIndicator.style.height = `${refreshThreshold}px`;
+            refreshIndicator.innerText = 'Refreshing...';
+            // Simulate a network request
+            setTimeout(() => {
+                refreshIndicator.innerText = 'Refresh Complete';
+                setTimeout(() => {
+                    resetIndicator();
+                    isRefreshing = false;
+                }, 1000);
+            }, 2000);
+        }
+
+        function resetIndicator() {
+            refreshIndicator.style.display = 'none';
+            refreshIndicator.style.height = '0px';
+            refreshIndicator.innerText = 'Refreshing...';
+        }
+    </script>
+</body>
+</html>
