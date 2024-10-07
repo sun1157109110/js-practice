@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>响应式布局</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        header {
+            background-color: #f8f9fa;
+            width: 100%;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        nav {
+            background-color: #343a40;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            flex-basis: 200px;
+            border: 1px solid #ddd;
+        }
+
+        main {
+            background-color: #e9ecef;
+            flex-grow: 1;
+            padding: 20px;
+            border: 1px solid #ddd;
+        }
+
+        /* 小屏幕：导航栏在顶部 */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            nav {
+                order: 1;
+            }
+
+            main {
+                order: 2;
+            }
+        }
+
+        /* 大屏幕：导航栏在左侧 */
+        @media (min-width: 992px) {
+            .container {
+                flex-direction: row;
+            }
+
+            nav {
+                flex-basis: 200px;
+                order: 0;
+            }
+
+            main {
+                order: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>顶部栏</header>
+        <nav>导航栏</nav>
+        <main>内容区域</main>
+    </div>
+</body>
+</html>

@@ -43,3 +43,57 @@ for (let i in a) {
     console.log(i);
 };
 console.log(deepClone(a));
+
+
+function deepClone(obj, hash = new WeakMap()) {
+    // 处理null和undefined的情况
+    if (obj === null || typeof obj !== 'object') {
+        return obj;
+    }
+    
+    // 处理Date对象
+    if (obj instanceof Date) {
+        return new Date(obj);
+    }
+    
+    // 处理正则表达式对象
+    if (obj instanceof RegExp) {
+        return new RegExp(obj);
+    }
+
+    // 处理函数
+    if (typeof obj === 'function') {
+        return obj.bind(null);  // 返回一个绑定的副本，保证函数拷贝
+    }
+
+    // 处理循环引用，防止无限递归
+    if (hash.has(obj)) {
+        return hash.get(obj);
+    }
+
+    // 处理数组
+    if (Array.isArray(obj)) {
+        const arr = [];
+        hash.set(obj, arr);  // 存储对该对象的引用，防止循环
+        obj.forEach((item, index) => {
+            arr[index] = deepClone(item, hash);
+        });
+        return arr;
+    }
+
+    // 处理普通对象
+    const cloneObj = {};
+    hash.set(obj, cloneObj);  // 存储对象引用，防止循环
+
+    Object.keys(obj).forEach(key => {
+        cloneObj[key] = deepClone(obj[key], hash);
+    });
+
+    // 处理Symbol属性
+    const symbolKeys = Object.getOwnPropertySymbols(obj);
+    symbolKeys.forEach(symbol => {
+        cloneObj[symbol] = deepClone(obj[symbol], hash);
+    });
+
+    return cloneObj;
+}

@@ -98,4 +98,19 @@ function quickSort(num, start, end) {
   quickSort(num, l+1, end)
   return num
 }
-console.log(quickSort(arr,0,arr.length-1));
+function quickSort2(arr) {
+  if (arr.length <= 1) {
+    return arr;
+  }
+
+  const pivot = arr[Math.floor(arr.length / 2)];
+  const left = arr.filter(x => x < pivot);
+  const middle = arr.filter(x => x === pivot);
+  const right = arr.filter(x => x > pivot);
+
+  return [...quickSort2(left), ...middle, ...quickSort2(right)];
+}
+
+
+// console.log(quickSort(arr,0,arr.length-1));
+console.log(quickSort2(arr));
