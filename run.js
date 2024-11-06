@@ -1,147 +1,212 @@
 const fs = require('fs');
-const prompt = require('prompt-sync')({ sigint: true }); // Import prompt-sync
-
-// Helper function to write to file
-function writeToFile(fileName, content, append = false) {
-    if (append) {
-        fs.appendFileSync(fileName, content);
-    } else {
-        fs.writeFileSync(fileName, content);
-    }
-}
+const path = require('path');
 
 class CElement {
-    constructor() {
-        this.n_atm = 0; // total atom number
-        this.n_mol = 0; // molecule number
-        this.n_seg = 0; // The number of different types of segments
-        this.segn = []; // atom number in each segment
-        this.segt = []; // atom type in each segment
-        this.segRigid = []; // Is this segment rigid
-        this.l_bnd = 0; // bond length
+  constructor() {
+    this.n_atm = 0; // total atom number
+    this.n_mol = 0; // molecule number
+    this.n_seg = 0; // The number of different type of segment, such as A-b-B, is 2.
+    this.segn = []; // atom number in each segment
+    this.segt = []; // atom type in each segment
+    this.segRigid = []; // A sign for rigid (true) or coil (false) blocks
+    this.l_bnd = 0.0; // bond length
 
-        // Init box
-        this.lx = 0; this.ly = 0; this.lz = 0;
-        this.hx = 0; this.hy = 0; this.hz = 0;
-
-        this.init();
-    }
-
-    init() {
-        let rigidTemp = false;
-
-        this.n_seg = parseInt(prompt("Input number of segments: "));
-        for (let i = 0; i < this.n_seg; i++) {
-            this.segn.push(0);
-            this.segt.push(0);
-            this.segRigid.push(rigidTemp);
-        }
-        this.n_atm = 0;
-
-        for (let i = 0; i < this.n_seg; i++) {
-            this.segt[i] = parseInt(prompt(`Input the atom type of ${i + 1} segment: `));
-            this.segn[i] = parseInt(prompt("Input the atom number of this type: "));
-            this.n_atm += this.segn[i]; // total atom number in each molecule
-
-            if (this.segn[i] > 2) { // only atom number >=3 can be rigid chain
-                let boolTemp = prompt("Is this segment a rigid segment? (please input true or false): ");
-                while (true) {
-                    if (boolTemp === "true" || boolTemp === "false") {
-                        rigidTemp = boolTemp === "true";
-                        this.segRigid[i] = rigidTemp;
-                        break;
-                    } else {
-                        boolTemp = prompt("Invalid value, please input true or false:");
-                    }
-                }
-            }
-        }
-
-        this.n_mol = parseInt(prompt("Input the number of molecules: "));
-        this.n_atm *= this.n_mol; // total atom number for all molecules
-
-        this.l_bnd = parseFloat(prompt("Bond length:"));
-
-        // Init box
-        this.lx = parseFloat(prompt("Input lowx:"));
-        this.hx = parseFloat(prompt("Input highx:"));
-        this.ly = parseFloat(prompt("Input lowy:"));
-        this.hy = parseFloat(prompt("Input highy:"));
-        this.lz = parseFloat(prompt("Input lowz:"));
-        this.hz = parseFloat(prompt("Input highz:"));
-    }
+    // init box
+    this.lx = 0;
+    this.ly = 0;
+    this.lz = 0;
+    this.hx = 0;
+    this.hy = 0;
+    this.hz = 0;
+  }
 }
 
-function write_title(fileName) {
-    let content = "LAMMPS data file by lmp_data\n\n";
-    let n_atom = 0, n_bond = 0, n_angle = 0;
+const sys = [];
+let n_element = 0;
+let iseed = 0;
 
-    sys.forEach((element) => {
-        n_atom += element.n_atm;
-        if (element.l_bnd > 0) {
-            n_bond += element.n_mol * (element.n_atm / element.n_mol - 1);
-            element.segn.forEach((segLength, segIndex) => {
-                if (element.segRigid[segIndex]) {
-                    n_angle += segLength - 2;
-                }
-            });
+function main() {
+  const inputData = fs.readFileSync(path.join(__dirname, 'chain.txt'), 'utf-8');
+  const lines = inputData.split('\n').filter(line => line.trim() !== '');
+  let currentLine = 0;
+
+  // Input element number
+  n_element = parseInt(lines[currentLine++]);
+
+  for (let i = 0; i < n_element; i++) {
+    const element = new CElement();
+    element.n_seg = parseInt(lines[currentLine++]);
+
+    for (let j = 0; j < element.n_seg; j++) {
+      element.segt.push(parseInt(lines[currentLine++]));
+      element.segn.push(parseInt(lines[currentLine++]));
+      element.n_atm += element.segn[j];
+
+      if (element.segn[j] > 2 && currentLine < lines.length) {
+        const rigidValue = lines[currentLine++]?.trim();
+        if (rigidValue === 'true' || rigidValue === 'false') {
+          element.segRigid.push(rigidValue === 'true');
+        } else {
+          throw new Error(`Invalid value for rigid segment: ${rigidValue}`);
         }
+      } else {
+        element.segRigid.push(false);
+      }
+    }
+
+    element.n_mol = parseInt(lines[currentLine++]);
+    element.n_atm *= element.n_mol;
+    element.l_bnd = parseFloat(lines[currentLine++]);
+
+    // Init box
+    if (currentLine < lines.length) {
+      const boxValues = lines[currentLine++].split(' ').map(parseFloat);
+      if (boxValues.length >= 2) {
+        element.lx = boxValues[0];
+        element.hx = boxValues[1];
+      }
+    }
+
+    if (currentLine < lines.length) {
+      const boxValuesY = lines[currentLine++].split(' ').map(parseFloat);
+      if (boxValuesY.length >= 2) {
+        element.ly = boxValuesY[0];
+        element.hy = boxValuesY[1];
+      }
+    }
+
+    if (currentLine < lines.length) {
+      const boxValuesZ = lines[currentLine++].split(' ').map(parseFloat);
+      if (boxValuesZ.length >= 2) {
+        element.lz = boxValuesZ[0];
+        element.hz = boxValuesZ[1];
+      }
+    }
+
+    sys.push(element);
+  }
+
+  if (currentLine < lines.length) {
+    iseed = parseInt(lines[currentLine++]);
+  }
+  Math.seedrandom = require('seedrandom');
+  Math.seedrandom(iseed.toString(), { global: true });
+
+  const outputFile = path.join(__dirname, 'data.out');
+  const outputStream = fs.createWriteStream(outputFile);
+
+  writeTitle(outputStream);
+  writeAtom(outputStream);
+  writeBond(outputStream);
+
+  outputStream.end();
+}
+
+function writeTitle(fn) {
+  let n_atom = 0;
+  let n_bond = 0;
+  let n_angle = 0;
+
+  sys.forEach((element) => {
+    n_atom += element.n_atm;
+    if (element.l_bnd > 0.0) {
+      n_bond += element.n_mol * (element.n_atm / element.n_mol - 1);
+      element.n_mol && element.segRigid.forEach((rigid, index) => {
+        if (rigid) {
+          n_angle += element.segn[index] - 2;
+        }
+      });
+    }
+  });
+
+  fn.write(`LAMMPS data file by lmp_data\n\n`);
+  fn.write(`${n_atom} atoms\n`);
+  fn.write(`${n_bond} bonds\n`);
+  fn.write(`${n_angle} angles\n`);
+  fn.write(`0 dihedrals\n`);
+  fn.write(`0 impropers\n\n`);
+
+  let maxatyp = 0;
+  let maxx = -Number.MAX_VALUE, maxy = -Number.MAX_VALUE, maxz = -Number.MAX_VALUE;
+  let minx = Number.MAX_VALUE, miny = Number.MAX_VALUE, minz = Number.MAX_VALUE;
+
+  sys.forEach((element) => {
+    element.segt.forEach((type) => {
+      if (type > maxatyp) maxatyp = type;
     });
+    if (maxx < element.hx) maxx = element.hx;
+    if (maxy < element.hy) maxy = element.hy;
+    if (maxz < element.hz) maxz = element.hz;
+    if (minx > element.lx) minx = element.lx;
+    if (miny > element.ly) miny = element.ly;
+    if (minz > element.lz) minz = element.lz;
+  });
 
-    content += `${n_atom} atoms\n`;
-    content += `${n_bond} bonds\n`;
-    content += `${n_angle} angles\n`;
-    content += "0 dihedrals\n";
-    content += "0 impropers\n\n";
+  fn.write(`${maxatyp} atom types\n`);
+  fn.write(`1 bond types\n`);
+  fn.write(`0 angle types\n`);
+  fn.write(`0 dihedral types\n`);
+  fn.write(`0 improper types\n`);
+  fn.write(`10 extra bond per atom\n\n`);
 
-    let maxatyp = 0;
-    let minx = Number.MAX_VALUE, maxx = -Number.MAX_VALUE;
-    let miny = Number.MAX_VALUE, maxy = -Number.MAX_VALUE;
-    let minz = Number.MAX_VALUE, maxz = -Number.MAX_VALUE;
+  fn.write(`${minx} ${maxx} xlo xhi\n`);
+  fn.write(`${miny} ${maxy} ylo yhi\n`);
+  fn.write(`${minz} ${maxz} zlo zhi\n\n`);
 
-    sys.forEach((element) => {
-        element.segt.forEach((type) => {
-            if (type > maxatyp) maxatyp = type;
-        });
-        if (element.hx > maxx) maxx = element.hx;
-        if (element.hy > maxy) maxy = element.hy;
-        if (element.hz > maxz) maxz = element.hz;
-        if (element.lx < minx) minx = element.lx;
-        if (element.ly < miny) miny = element.ly;
-        if (element.lz < minz) minz = element.lz;
-    });
+  fn.write(`Masses\n\n`);
+  for (let i = 0; i < maxatyp; i++) {
+    fn.write(`${i + 1} 1.0\n`);
+  }
+  fn.write(`\n`);
+}
 
-    content += `${maxatyp} atom types\n`;
-    content += `1 bond types\n`;
-    content += `0 angle types\n`;
-    content += `0 dihedral types\n`;
-    content += `0 improper types\n\n`;
-    content += `${minx} ${maxx} xlo xhi\n`;
-    content += `${miny} ${maxy} ylo yhi\n`;
-    content += `${minz} ${maxz} zlo zhi\n\n`;
+function writeAtom(fn) {
+  fn.write(`Atoms # full\n\n`);
+  let na = 0;
+  let nm = 1;
 
-    content += "Masses\n\n";
-    for (let i = 0; i < maxatyp; i++) {
-        content += `${i + 1} 1.0\n`;
+  sys.forEach((element) => {
+    for (let j = 0; j < element.n_mol; j++) {
+      for (let k = 0; k < element.n_seg; k++) {
+        for (let l = 0; l < element.segn[k]; l++) {
+          na++;
+          fn.write(` ${na} ${nm} ${element.segt[k]} `);
+          fn.write(`${element.segt[k] === 2 ? -1 : element.segt[k] === 3 ? 1 : 0} `);
+          const x = randomInRange(element.lx, element.hx);
+          const y = randomInRange(element.ly, element.hy);
+          const z = randomInRange(element.lz, element.hz);
+          fn.write(`${x} ${y} ${z}\n`);
+        }
+      }
+      nm++;
     }
-    content += "\n";
-
-    writeToFile(fileName, content);
+  });
+  fn.write(`\n`);
 }
 
-let sys = [];
-let n_element = parseInt(prompt("Input element number: "));
-for (let i = 0; i < n_element; i++) {
-    let tempElement = new CElement();
-    sys.push(tempElement);
+function writeBond(fn) {
+  fn.write(`Bonds\n\n`);
+  let na = 0;
+  let nb = 1;
+
+  sys.forEach((element) => {
+    for (let j = 0; j < element.n_mol; j++) {
+      for (let k = 0; k < element.n_seg; k++) {
+        for (let l = 0; l < element.segn[k]; l++) {
+          na++;
+          if (element.l_bnd > 0.0 && (k * k + l * l) !== 0) {
+            fn.write(` ${nb} 1 ${na - 1} ${na}\n`);
+            nb++;
+          }
+        }
+      }
+    }
+  });
+  fn.write(`\n`);
 }
 
-let iseed = parseInt(prompt("Input seed value: "));
-Math.seedrandom(iseed);
-console.log(iseed);
+function randomInRange(min, max) {
+  return Math.random() * (max - min) + min;
+}
 
-// Write Title to file
-const outputFileName = 'data.out';
-write_title(outputFileName);
-
-// Continue with other write functions like write_atom, write_bond, etc.
+main();
