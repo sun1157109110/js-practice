@@ -48,16 +48,26 @@ function _currying(func, len = func.length, ...args) {
     }
   };
 }
+function add(a, b, c) {
+  return a + b + c;
+}
 
-function curry(fn, ...args) {
-  return fn.length <= args.length ?
-    fn(...args) :
-    curry.bind(null, fn, ...args);
-}
-function add(x, y) {
-  return x + y
-}
-let fn = curry(add)
-let f = currying(add)
-console.log(f(1));
-console.log(fn(1));
+const curriedAdd = currying(add);
+
+console.log(curriedAdd(1)(2)(3)); // 输出 6
+console.log(curriedAdd(1, 2)(3)); // 输出 6
+console.log(curriedAdd(1)(2, 3)); // 输出 6
+
+
+// function curry(fn, ...args) {
+//   return fn.length <= args.length ?
+//     fn(...args) :
+//     curry.bind(null, fn, ...args);
+// }
+// function add(x, y) {
+//   return x + y
+// }
+// let fn = curry(add)
+// let f = currying(add)
+// console.log(f(1));
+// console.log(fn(1));
