@@ -71,4 +71,8 @@ const path = 'target[1]'
 // const target = 'FE Coder'
 
 // assert.equal(getByPath(obj, path), target)
+
+var object = { 'a': [{ 'b': { 'c': 3 } }] };
+console.log(get(object, 'a[0].b.c'));
+
 console.log(getByPath(obj, path));
